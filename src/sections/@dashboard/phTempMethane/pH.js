@@ -88,8 +88,8 @@ const PhComponent = () => {
       sx={{
         width: "100%",
         height: 350,
-        margin: 2,
-        display: "flex",
+        margin:0,
+        marginTop:2 ,display: "flex",
         flexDirection: "column",
         textAlign: "center",
         boxShadow: 20,
@@ -151,7 +151,7 @@ const PhComponent = () => {
 
         }}
       >
-        <Typography variant="h6">{`${value.toFixed(2)} pH`}</Typography>
+        <Typography variant="h5">{`${value.toFixed(2)} pH`}</Typography>
       </div>
     </Card>
   );

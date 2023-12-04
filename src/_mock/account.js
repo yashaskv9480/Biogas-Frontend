@@ -2,7 +2,7 @@
 
 const account = {
   displayName: 'Admin',
-  email: 'farmIot@gmail.com',
+  email: 'admin@gmail.com',
  // photoURL: '/assets/images/avatars/avatar_default.jpg',
 };
 

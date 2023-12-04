@@ -11,6 +11,8 @@ import Iconify from '../../../components/iconify';
 import AccountPopover from './AccountPopover';
 // import LanguagePopover from './LanguagePopover';
 import NotificationsPopover from './NotificationsPopover';
+// import GreeneriaLogo from './Greeneria-Logo.png';
+import green from './greneria.jpeg'
 
 // ----------------------------------------------------------------------
 
@@ -64,17 +66,32 @@ export default function Header({ onOpenNav }) {
         >
           <Iconify icon="eva:menu-2-fill" />
         </IconButton>
+        {/* <img
+          src={GreeneriaLogo}
+          alt="Greeneria Logo"
+          style={{
+            width: '250px', // Adjust the width as needed
+            height: 'auto', // Maintain the aspect ratio
+            cursor: 'pointer',
+            marginLeft: '0px', // Adjust the left margin as needed
+          }}
+        />  */}
 
         {/* <Searchbar /> */}
 
         <Box sx={{ flexGrow: 1 }} />
+        <Box sx={{ textAlign: 'center', marginRight: 2 ,width: "50px"}}>
+          <Typography variant="h5" color="text.primary" >
+           <img src = {green} alt = 'demo' style = {{}}/>
+          </Typography>
+        </Box>
         <Box sx={{ textAlign: 'center', marginRight: 2 }}>
-          <Typography variant="h4" color="text.primary">
+          <Typography variant="h5" color="text.primary" >
             {currentTime}
           </Typography>
         </Box>
         <Box sx={{ textAlign: 'center', marginRight: 2 }}>
-          <Typography variant="h6" color="text.primary">
+          <Typography variant="h5" color="text.primary">
             {currentLocation}
           </Typography>
         </Box>
