@@ -2,7 +2,6 @@ import JSPDF from "jspdf";
 import "jspdf-autotable";
 // Date Fns is used to format the dates we receive
 // from our API call
-import { format } from "date-fns";
 
 // define a generatePDF function that accepts a sensorvalues argument
 const GeneratePDF = (sensorvalues,startDate,endDate) => {

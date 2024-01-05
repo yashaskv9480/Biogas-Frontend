@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { Helmet } from "react-helmet-async";
 import { Button, TextField } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import Cookies from "js-cookie";
-import { CSVLink } from "react-csv";
+import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom/dist";
-import Biogasapi from "../apis/Biogasapi";
 import Loader from "../../components/loading/Loading";
+import Biogasapi from "../apis/Biogasapi";
 import GeneratePDF from "./GeneratePDF";
 
 
@@ -53,11 +52,12 @@ const Report = () => {
       const uid = Cookies.get('uid');
       try {
         const response = await Biogasapi.get("/sensor_values");
-
+  
         if (!response.error) {
           const uniqueSensorValues = response.data.map((value, index) => ({
             ...value,
             id: `${value.device_id}_${index}`,
+            ...(value.dtime && { dtime: formatDateString(value.dtime) }),
           }));
           setSensorValues(uniqueSensorValues);
         }
@@ -68,13 +68,26 @@ const Report = () => {
         setLoading(false);
       }
     };
-
+  
+    const formatDateString = (inputDateString) => {
+      const inputDate = new Date(inputDateString);
+      
+      const year = inputDate.getFullYear().toString().slice(-2);
+      const month = (inputDate.getMonth() + 1).toString().padStart(2, '0');
+      const day = inputDate.getDate().toString().padStart(2, '0');
+      const hours = inputDate.getHours().toString().padStart(2, '0');
+      const minutes = inputDate.getMinutes().toString().padStart(2, '0');
+      const seconds = inputDate.getSeconds().toString().padStart(2, '0');
+      
+      return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+    };
+  
     fetchDevicesList();
   }, []);
-
+    
   const tableColumn = ["Device_Id", "R", "Y", "B", "Frequency", "Ph", "Temp", "Weight", "Time"];
   const tableRows = [];
-
+  
   sensorvalues.forEach((sensorvalue) => {
     const dateString = sensorvalue.dtime;
 
