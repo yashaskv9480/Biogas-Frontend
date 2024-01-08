@@ -1,12 +1,9 @@
-import React, { Fragment, useState, useEffect } from "react";
-import { Helmet } from "react-helmet-async";
-import { Button, TextField } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
-import { DataGrid } from "@mui/x-data-grid";
-import Cookies from "js-cookie";
+import { Button } from "@mui/material";
+import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import Biogasapi from "../apis/Biogasapi";
-import Loader from "../../components/loading/Loading";
 
 
 const TodoListtable = () => {
@@ -58,7 +55,7 @@ const TodoListtable = () => {
     useEffect(() => {
       getTodos();
     }, []);
-  
+    console.log(todos)
     return (
         <>
         <Helmet>

@@ -1,20 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { Helmet } from "react-helmet-async";
-import { Button, TextField } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
+import { Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
-import Biogasapi from "../apis/Biogasapi";
 import Loader from "../../components/loading/Loading";
+import Biogasapi from "../apis/Biogasapi";
 
 
-const columns = [
-    { id: 1, field: 'device_id', headerName: 'Device ID', flex: 1 },
-    { id: 2, field: 'logitude', headerName: 'Longitude', flex: 1 },
-    { id: 3, field: 'latitude', headerName: 'Latitude', flex: 1 },
-    { id: 4, field: 'description', headerName: 'Description', flex: 1 },
-];
+
 
 const DevicesListTable = () => {
     const [devices, setDevices] = useState([])
@@ -44,12 +39,40 @@ const DevicesListTable = () => {
         window.open(`../../sensor-value/${encodeDeviceId}`, "_blank")
     }
 
+    const deletedevice = async (deviceId) => {
+        try {
+          const deletedevice = await Biogasapi.delete(`/deletedevice/${ deviceId}`)
+          console.log(deletedevice);
+          setDevices(devices.filter((device) => device.device_id!== deviceId));
+        } catch (err) {
+          console.error(err.message);
+        }
+      };  
+
+      const columns = [
+        { id: 1, field: 'device_id', headerName: 'Device ID', flex: 1 },
+        { id: 2, field: 'logitude', headerName: 'Longitude', flex: 1 },
+        { id: 3, field: 'latitude', headerName: 'Latitude', flex: 1 },
+        { id: 4, field: 'description', headerName: 'Description', flex: 1 },
+        {
+            field: 'delete',
+            headerName: 'Delete',
+            flex: 1,
+            renderCell: (params) => (
+                <button className="btn btn-danger" onClick={() => {deletedevice(params.row.device_id)}}>
+                    Delete
+                </button>
+                
+            ),
+        },
+    ];
+
     useEffect(() => {
 
         const fetchDevicesList = async () => {
             const uid = Cookies.get('uid')
             try {
-                const response = await Biogasapi.get("/devices");
+                const response = await Biogasapi.get("/getdevices");
                 
                 if(!response.error){
                     setDevices(response.data);
@@ -65,6 +88,8 @@ const DevicesListTable = () => {
 
         fetchDevicesList();
     }, [])
+
+    console.log(devices)
     return (
         <>
             <Helmet>

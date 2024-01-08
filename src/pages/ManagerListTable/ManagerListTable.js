@@ -1,26 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { Helmet } from "react-helmet-async";
-import { Button, TextField } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
+import { Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import Biogasapi from '../apis/Biogasapi';
+
 
 import Loader from "../../components/loading/Loading";
 
 
-const columns = [
-    { field: 'name', headerName: 'Manager Name', flex: 1 },
-    { field: 'address', headerName: 'Address', flex: 1 },
-    { field: 'mobile', headerName: 'Mobile', flex: 1 },
-    { field: 'email', headerName: 'Email', flex: 1 },
-];
 
 const ManagerListTable = () => {
     const [managers, setManagers] = useState([])
     const [loading, setLoading] = useState(true)
-    const [searchQuery, setSearchQuery] = useState("")
+    const [searchQuery, setSearchQuery] = useState("")  
 
     const navigate = useNavigate()
 
@@ -29,7 +25,7 @@ const ManagerListTable = () => {
     }
 
     const managersWithUniqueId = managers.map((manager, index) => ({
-        id: manager.uid, // Use manager_id as the unique identifier
+        id: manager.uid,
         ...manager,
     }));
 
@@ -37,21 +33,46 @@ const ManagerListTable = () => {
         manager.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
+    const deletemanager = async (uid) => {
+        try {
+          const deleteTodo = await Biogasapi.delete(`/deletemanager/${uid}`)
+          console.log(deleteTodo);
+          setManagers(managers.filter((manager) => manager.uid !== uid));
+        } catch (err) {
+          console.error(err.message);
+        }
+      };  
+
+      const columns = [
+        { field: 'name', headerName: 'Manager Name', flex: 1 },
+        { field: 'address', headerName: 'Address', flex: 1 },
+        { field: 'mobile', headerName: 'Mobile', flex: 1 },
+        { field: 'email', headerName: 'Email', flex: 1 },
+        {
+            field: 'delete',
+            headerName: 'Delete',
+            flex: 1,
+            renderCell: (params) => (
+                <button className="btn btn-danger" onClick={() => {deletemanager(params.row.uid)}}>
+                    Delete
+                </button>
+                
+            ),
+        },
+    ];
+    
     useEffect(() => {
 
-        const fetchManagerList = async () => {
+        const fetchDevicesList = async () => {
             const uid = Cookies.get('uid')
-            const role = "tenant"
             try {
-                const response = await fetch("http://localhost:4001/api/get-tenant-user", {
-                    method: "GET",
-                    headers: { uid, role }
-                });
-                const jsonData = await response.json();
-                if (!jsonData.error) {
-                    setManagers(jsonData);
+                const response = await Biogasapi.get("/getmanagers");
+                
+                if(!response.error){
+                    setManagers(response.data);
+                    console.log(managers)
                 }
-                console.log(jsonData)
+                console.log(response)
             } catch (err) {
                 console.error(err.message);
             } finally {
@@ -59,7 +80,7 @@ const ManagerListTable = () => {
             }
         };
 
-        fetchManagerList();
+        fetchDevicesList();
     }, [])
     return (
         <>
@@ -79,16 +100,16 @@ const ManagerListTable = () => {
             ) : managers.length > 0 ? (
                 <>
                     <h1>Managers</h1>
-                    <TextField
+                    {/* <TextField
                         label="Search by Description"
                         variant="outlined"
                         fullWidth
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)} // Update search query state
                         style={{ margin: "16px 0" }}
-                    />
+                    /> */}
                     <center>
-                        <div style={{ height: 400, width: '75%' }}>
+                        <div style={{ height: 400, width: '100%' }}>
                             <DataGrid
                                 rows={filteredManagers}
                                 columns={columns}

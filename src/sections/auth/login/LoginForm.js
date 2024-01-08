@@ -1,12 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // @mui
-import { Link, Stack, IconButton, InputAdornment, TextField, Checkbox } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import { Checkbox, IconButton, InputAdornment, Link, Stack, TextField } from '@mui/material';
 
 import Cookies from 'js-cookie';
 // components
-import Biogasapi from '../../../pages/apis/Biogasapi';
 import Iconify from '../../../components/iconify';
 
 // ----------------------------------------------------------------------
@@ -20,7 +19,7 @@ export default function LoginForm() {
 
   const handleClick = async() => {
     try {
-      const response = await fetch('http://172.105.33.238:3500/api/v1/login', {
+      const response = await fetch('http://localhost:3500/api/v1/login', {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({ email, password })
@@ -31,8 +30,9 @@ export default function LoginForm() {
         const jsonData = await response.json();
         console.log(jsonData)
         if(jsonData.token){
-          Cookies.set('token', jsonData.token, {expires: 2})
-          Cookies.set('uid', jsonData.uid, {expires: 2})
+          Cookies.set('token', jsonData.token, {expires: 1})
+          Cookies.set('type', jsonData.type, {expires: 1})
+          Cookies.set('uid', jsonData.uid, {expires: 1})
         
           navigate('/dashboard/app', { replace: true });
         } 
@@ -57,7 +57,7 @@ export default function LoginForm() {
     const token = Cookies.get('token');
     console.log(token)
     if (token) {
-      const response = await fetch('http://172.105.33.238:3500/api/v1/authenticate', {
+      const response = await fetch('http://localhost:3500/api/v1/authenticate', {
         method: "GET",
         headers: { "Content-Type": "application/json", "Authorization": token },
       })
