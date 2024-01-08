@@ -1,10 +1,10 @@
-import Cookies from 'js-cookie';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 // @mui
-import { Avatar, Box, Divider, IconButton, MenuItem, Popover, Stack, Typography } from '@mui/material';
 import { alpha } from '@mui/material/styles';
+import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, Popover } from '@mui/material';
 // mocks_
 import account from '../../../_mock/account';
 
@@ -29,6 +29,10 @@ const MENU_OPTIONS = [
 
 export default function AccountPopover() {
   const [open, setOpen] = useState(null);
+
+  const [email, setEmail] = useState("")
+  const [name, setName] = useState("")
+
   const navigate = useNavigate();
 
 
