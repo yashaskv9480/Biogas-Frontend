@@ -48,6 +48,7 @@ export default function AccountPopover() {
   const handleLogout = () => {
     Cookies.remove('token')
     Cookies.remove('uid')
+    Cookies.remove('type')
     navigate('/login', { replace: true });
     setOpen(null);
   }
