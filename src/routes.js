@@ -3,18 +3,18 @@ import { Navigate, useRoutes } from 'react-router-dom';
 import DashboardLayout from './layouts/dashboard';
 import SimpleLayout from './layouts/simple';
 //
-import AddDevice from './pages/AddDevice/AddDeviceForm';
-import AddTodo from './pages/AddTodo/Addtodo';
-import DashboardAppPage from './pages/DashboardAppPage';
 import DevicesListTable from './pages/DevicesListTable/DevicesListTable';
-import LoginPage from './pages/LoginPage';
-import ManagerListTable from './pages/ManagerListTable/ManagerListTable';
-import Page404 from './pages/Page404';
-import Report from './pages/ReportSensorValue/Report';
-import SensorValuePage from './pages/SensorValue/SensorValuePage';
-import TodoListtable from './pages/TodoListTable/TodoListtable';
-import AddUser from './pages/UserAdd/UserAdd';
 import UserListTable from './pages/UserListTable/UserListTable';
+import LoginPage from './pages/LoginPage';
+import Page404 from './pages/Page404';
+import ManagerListTable from './pages/ManagerListTable/ManagerListTable';
+import DashboardAppPage from './pages/DashboardAppPage';
+import AddDevice from './pages/AddDevice/AddDeviceForm';
+import SensorValuePage from './pages/SensorValue/SensorValuePage';
+import AddUser from './pages/UserAdd/UserAdd';
+import Report from './pages/ReportSensorValue/Report';
+import TodoListtable from './pages/TodoListTable/TodoListtable';
+import AddTodo from './pages/AddTodo/Addtodo';
 
 // ----------------------------------------------------------------------
 
@@ -35,7 +35,7 @@ export default function Router() {
         { path: 'devices', element: <DevicesListTable /> },
         { path: 'add-device', element: <AddDevice /> },
         { path: 'add-manager', element: <AddUser /> },
-        { path: 'add-user', element: <h1><AddUser/></h1> },
+        { path: 'add-user', element: <h1>user add</h1> },
         { path: 'sensor_values', element: <Report/>},
         { path: 'todo', element: <TodoListtable/>},
         { path: 'addtodo', element: <AddTodo/>},

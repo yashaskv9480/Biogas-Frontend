@@ -1,18 +1,17 @@
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 // @mui
-import { Avatar, Box, Drawer, Link, Typography } from '@mui/material';
-import { alpha, styled } from '@mui/material/styles';
+import { styled, alpha } from '@mui/material/styles';
+import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@mui/material';
 // mock
-import Cookies from 'js-cookie';
 import account from '../../../_mock/account';
 // hooks
 import useResponsive from '../../../hooks/useResponsive';
 // components
 import Logo from '../../../components/logo';
-import NavSection from '../../../components/nav-section';
 import Scrollbar from '../../../components/scrollbar';
+import NavSection from '../../../components/nav-section';
 //
 import navConfig from './config';
 
@@ -37,14 +36,10 @@ Nav.propTypes = {
 
 export default function Nav({ openNav, onCloseNav }) {
   const { pathname } = useLocation();
-  const [type,settype] = useState("");
 
   const isDesktop = useResponsive('up', 'lg');
 
   useEffect(() => {
-    const type = Cookies.get("type")
-    settype(type)
-
     if (openNav) {
       onCloseNav();
     }
@@ -80,7 +75,7 @@ export default function Nav({ openNav, onCloseNav }) {
         </Link>
       </Box>
 
-      <NavSection data={navConfig(type)} />
+      <NavSection data={navConfig} />
     </Scrollbar>
   );
 
