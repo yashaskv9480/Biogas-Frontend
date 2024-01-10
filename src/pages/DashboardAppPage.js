@@ -1,39 +1,23 @@
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { faker } from '@faker-js/faker';
-import { useState, useEffect, useLayoutEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
 
 // @mui
 
-import { LoadingButton } from '@mui/lab';
+import { Container, Grid } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { Grid, Container, Typography } from '@mui/material';
 import Loader from '../components/loading/Loading';
 
 // components
-import Iconify from '../components/iconify';
 // sections
-import {
-  AppTasks,
-  AppNewsUpdate,
-  AppOrderTimeline,
-  AppCurrentVisits,
-  AppWebsiteVisits,
-  AppTrafficBySite,
-  AppWidgetSummary,
-  AppCurrentSubject,
-  AppConversionRates,
-} from '../sections/@dashboard/app';
 import BCard from '../sections/@dashboard/EnergyMeter/BCard';
+import Frequency from '../sections/@dashboard/EnergyMeter/Frequency';
 import RCard from '../sections/@dashboard/EnergyMeter/RCard';
 import YCard from '../sections/@dashboard/EnergyMeter/YCard';
-import Frequency from '../sections/@dashboard/EnergyMeter/Frequency';
-import Weight from '../sections/@dashboard/phTempMethane/Weight';
 import Temp from '../sections/@dashboard/phTempMethane/Temp';
+import Weight from '../sections/@dashboard/phTempMethane/Weight';
+import WeightWithButton from '../sections/@dashboard/phTempMethane/WeightLoggerButtons';
 import PhComponent from '../sections/@dashboard/phTempMethane/pH';
-import Biogasapi from './apis/Biogasapi';
-import WeightWithButton from '../sections/@dashboard/phTempMethane/WeightLoggerButtons'
 // ----------------------------------------------------------------------
 
 export default function DashboardAppPage() {

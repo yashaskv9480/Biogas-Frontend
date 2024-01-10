@@ -1,7 +1,9 @@
-import * as React from 'react';
 import { Button as BaseButton } from '@mui/base/Button';
-import { styled } from '@mui/system';
 import Stack from '@mui/material/Stack';
+import { styled } from '@mui/system';
+import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
+import Biogasapi from "../../../pages/apis/Biogasapi";
 
 // export default function UnstyledButtonsSimple() {
 //   return (
@@ -82,8 +84,23 @@ const Button = styled(BaseButton)(
 
 const CustomButton = ({ action }) => {
     const [disabled, setDisabled] = React.useState(false);
+    const navigate = useNavigate();
+
 
     const handleClick = () => {
+      const fetchrecentvalues = async () => {
+        try {
+            const response = await Biogasapi.post("/weight-logging");
+            if(response.status === 200){
+              alert("Sucessfully Logged");
+            }
+            }
+         catch (err) {
+            alert("Error in Logging!Please try after sometime")
+            console.error(err.message);
+        } 
+    };
+      fetchrecentvalues();
       setDisabled(true);
 
       setTimeout(() => {
@@ -91,8 +108,12 @@ const CustomButton = ({ action }) => {
       }, 30000);
     };
 
+    const handlenavigate = () => {
+      navigate('../weight-logs', { replace: true });
+    }
+    
     return (
-      <Button onClick={action === 'log' ? handleClick : undefined} disabled={disabled}>
+      <Button onClick={action === 'log' ? handleClick : handlenavigate} disabled={disabled}>
         {action === 'log' ? 'Log Data' : 'View Logged Data'}
       </Button>
     );
