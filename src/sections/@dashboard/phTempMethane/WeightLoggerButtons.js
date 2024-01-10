@@ -3,14 +3,14 @@ import { Button as BaseButton } from '@mui/base/Button';
 import { styled } from '@mui/system';
 import Stack from '@mui/material/Stack';
 
-export default function UnstyledButtonsSimple() {
-  return (
-    <Stack spacing={2} direction="row">
-      <CustomButton action="log">Log Weight</CustomButton>
-      <CustomButton action="view">View Logged Data</CustomButton>
-    </Stack>
-  );
-}
+// export default function UnstyledButtonsSimple() {
+//   return (
+//     <Stack spacing={2} direction="row">
+//       <CustomButton action="log">Log Weight</CustomButton>
+//       <CustomButton action="view">View Logged Data</CustomButton>
+//     </Stack>
+//   );
+// }
 
 const blue = {
   200: '#99CCFF',
@@ -77,21 +77,31 @@ const Button = styled(BaseButton)(
   `,
 );
 
+// ... (imports remain unchanged)
+
 const CustomButton = ({ action }) => {
-  const [disabled, setDisabled] = React.useState(false);
+    const [disabled, setDisabled] = React.useState(false);
 
-  const handleClick = () => {
-    setDisabled(true);
+    const handleClick = () => {
+      setDisabled(true);
 
-    // Enable the button after 30 seconds
-    setTimeout(() => {
-      setDisabled(false);
-    }, 30000);
+      setTimeout(() => {
+        setDisabled(false);
+      }, 30000);
+    };
+
+    return (
+      <Button onClick={action === 'log' ? handleClick : undefined} disabled={disabled}>
+        {action === 'log' ? 'Log Data' : 'View Logged Data'}
+      </Button>
+    );
   };
 
-  return (
-    <Button onClick={handleClick} disabled={disabled}>
-      {action === 'log' ? 'Log Data' : 'View Logged Data'}
-    </Button>
-  );
-};
+  export default function UnstyledButtonsSimple() {
+    return (
+      <Stack spacing={2} direction="row">
+        <CustomButton action="log">Log Weight</CustomButton>
+        <CustomButton action="view">View Logged Data</CustomButton>
+      </Stack>
+    );
+  }

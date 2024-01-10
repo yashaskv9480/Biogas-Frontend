@@ -76,7 +76,7 @@ export default function DashboardAppPage() {
   }
 
   useEffect(() => {
-   authenticate();
+  authenticate();
   },[] )
 
 

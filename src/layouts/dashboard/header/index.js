@@ -43,7 +43,7 @@ Header.propTypes = {
 
 export default function Header({ onOpenNav }) {
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
-  const currentLocation = 'Whitefeild,Bangalore';
+  const currentLocation = 'Whitefield,Bangalore';
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(new Date().toLocaleTimeString());
@@ -78,7 +78,7 @@ export default function Header({ onOpenNav }) {
             {currentLocation}
           </Typography>
         </Box>
-        
+
         <Box sx={{ flexGrow: 1}} />
 
         <Stack
