@@ -100,8 +100,20 @@ console.log(recentvalue)
 
           <Container maxWidth="xl">
 
-
+          <Grid
+                container
+                item
+                xs={12}
+                justifyContent="center"
+                sx={{  marginLeft: '70px' }}
+              >
+                <Grid item xs={12} sm={6} md={3}>
+                  <WeightWithButton />
+                </Grid>
+              </Grid>
             <Grid container spacing={3}>
+
+
               <Grid item xs={14} sm={8} md={4}>
                 <Temp/>
               </Grid>
@@ -128,11 +140,6 @@ console.log(recentvalue)
               <Grid item xs={12} sm={6} md={3}>
                 <Frequency/>
               </Grid>
-
-              <Grid item xs={12} sm={6} md={3}>
-                <WeightWithButton/>
-              </Grid>
-
 
             </Grid>
           </Container>
