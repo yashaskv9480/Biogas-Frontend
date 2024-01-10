@@ -78,7 +78,8 @@ const Frequency = () => {
   return (
     <Card
       sx={{
-        width: "100%", height:300,margin: 2,
+        width: "100%", height:300, margin: 0,
+        marginTop:2,
         display: "flex",
         flexDirection: "column",
         textAlign: "center",

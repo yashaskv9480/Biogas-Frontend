@@ -88,7 +88,8 @@ const Weight = () => {
       sx={{
         width: "100%",
         height: 350,
-        margin: 2,
+        margin: 0,
+        marginTop:2,
         display: "flex",
         flexDirection: "column",
         textAlign: "center",

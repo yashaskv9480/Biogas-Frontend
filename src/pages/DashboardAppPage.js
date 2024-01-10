@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 // @mui
+
+import { LoadingButton } from '@mui/lab';
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
 import Loader from '../components/loading/Loading';
@@ -31,6 +33,7 @@ import Weight from '../sections/@dashboard/phTempMethane/Weight';
 import Temp from '../sections/@dashboard/phTempMethane/Temp';
 import PhComponent from '../sections/@dashboard/phTempMethane/pH';
 import Biogasapi from './apis/Biogasapi';
+import WeightWithButton from '../sections/@dashboard/phTempMethane/WeightLoggerButtons'
 // ----------------------------------------------------------------------
 
 export default function DashboardAppPage() {
@@ -67,17 +70,17 @@ export default function DashboardAppPage() {
     // } catch (err) {
     //   console.log(err.message);
     // }
-    
+
     setLoading()
     setIsValid(true)
   }
- 
-  useEffect(() => { 
+
+  useEffect(() => {
    authenticate();
   },[] )
-  
-  
-  
+
+
+
 console.log(recentvalue)
 
 // Use these variables in your component logic
@@ -85,7 +88,7 @@ console.log(recentvalue)
 
   return (
     <>
-      {loading 
+      {loading
         ?
         <Loader />
         :
@@ -96,57 +99,42 @@ console.log(recentvalue)
           </Helmet>
 
           <Container maxWidth="xl">
-            {/* <Typography variant="h4" sx={{ mb: 5 }}>
-              Hi, Welcome 
-            </Typography> */}
+
 
             <Grid container spacing={3}>
-              {/* <Grid item xs={12} sm={6} md={3}>
-                <AppWidgetSummary title="Add Users" total={100} icon={'mdi:user'} />
-              </Grid>
-
-              <Grid item xs={12} sm={6} md={3}>
-                <AppWidgetSummary title="Add Tenants" total={5} color="info" icon={'mdi:user'} />
-              </Grid>
-
-              <Grid item xs={12} sm={6} md={3}>
-                <AppWidgetSummary title="Add Devices" total={1000} color="warning" icon={'solar:devices-outline'} />
-              </Grid>
-
-              <Grid item xs={12} sm={6} md={3}>
-                <AppWidgetSummary title="View Reports" total={234} color="error" icon={'mdi:report-box'} />
-              </Grid> */}
-
               <Grid item xs={14} sm={8} md={4}>
                 <Temp/>
               </Grid>
-                
+
               <Grid item xs={14} sm={8} md={4}>
                 <Weight/>
               </Grid>
-                
-                <Grid item xs={14} sm={8} md={4}>
+
+              <Grid item xs={14} sm={8} md={4}>
                 <PhComponent/>
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
-             <RCard/>
+                <RCard/>
               </Grid>
 
               <Grid item xs={12} sm={6} md={3}>
-              <YCard/>
+                <YCard/>
               </Grid>
 
               <Grid item xs={12} sm={6} md={3}>
-              <BCard/>
+                <BCard/>
               </Grid>
 
               <Grid item xs={12} sm={6} md={3}>
-              <Frequency/>
+                <Frequency/>
               </Grid>
 
-                
-                
-               </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <WeightWithButton/>
+              </Grid>
+
+
+            </Grid>
           </Container>
         </>
         :
