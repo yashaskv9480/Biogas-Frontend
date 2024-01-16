@@ -42,7 +42,7 @@ Header.propTypes = {
 
 export default function Header({ onOpenNav }) {
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
-  const currentLocation = 'Whitefield,Bangalore';
+  const currentLocation = 'Hewlett Packard Enterprise,Whitefield Road';
   const currentArea = 'Mahadevapura';
   useEffect(() => {
     const interval = setInterval(() => {
