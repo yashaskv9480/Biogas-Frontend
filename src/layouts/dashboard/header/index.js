@@ -1,8 +1,8 @@
-import { useState,useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 // @mui
+import { AppBar, Box, IconButton, Stack, Toolbar, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { Box, Stack, AppBar, Toolbar, IconButton,Typography } from '@mui/material';
 // utils
 import { bgBlur } from '../../../utils/cssStyles';
 // components
@@ -10,7 +10,6 @@ import Iconify from '../../../components/iconify';
 // import Searchbar from './Searchbar';
 import AccountPopover from './AccountPopover';
 // import LanguagePopover from './LanguagePopover';
-import NotificationsPopover from './NotificationsPopover';
 
 // ----------------------------------------------------------------------
 
@@ -44,6 +43,7 @@ Header.propTypes = {
 export default function Header({ onOpenNav }) {
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
   const currentLocation = 'Whitefield,Bangalore';
+  const currentArea = 'Mahadevapura';
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(new Date().toLocaleTimeString());
@@ -74,8 +74,11 @@ export default function Header({ onOpenNav }) {
           </Typography>
         </Box>
         <Box sx={{ textAlign: 'center', marginRight: 2 }}>
-          <Typography variant="h6" color="text.primary">
+          <Typography variant="h5" color="text.primary">
             {currentLocation}
+          </Typography>
+          <Typography variant="h6" color="text.primary">
+            {currentArea}
           </Typography>
         </Box>
 
