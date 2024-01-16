@@ -45,7 +45,8 @@ Header.propTypes = {
 
 export default function Header({ onOpenNav }) {
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
-  const currentLocation = 'Whitefeild,Bangalore';
+  const currentLocation = 'Hewlett Packard Enterprise,WhiteFeild Road';
+  const currentArea = 'Mahadevapura';
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(new Date().toLocaleTimeString());
@@ -91,10 +92,14 @@ export default function Header({ onOpenNav }) {
           </Typography>
         </Box>
         <Box sx={{ textAlign: 'center', marginRight: 2 }}>
-          <Typography variant="h5" color="text.primary">
-            {currentLocation}
-          </Typography>
-        </Box>
+  <Typography variant="h5" color="text.primary">
+    {currentLocation}
+  </Typography>
+  <Typography variant="h6" color="text.primary">
+          {currentArea}
+  </Typography>
+</Box>
+
         
         <Box sx={{ flexGrow: 1}} />
 

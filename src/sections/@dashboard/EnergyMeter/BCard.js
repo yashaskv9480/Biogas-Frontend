@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
 import { Card, Typography, styled } from "@mui/material";
 import { alpha } from "@mui/material/styles";
+import { useEffect, useState } from "react";
+import Iconify from "../../../components/iconify";
 import Biogasapi from "../../../pages/apis/Biogasapi";
-import Iconify from "../../../components/iconify"; 
 
 const StyledIcon = styled("div")(({ theme }) => ({
   margin: "auto",
@@ -105,7 +105,7 @@ const BCard = () => {
           
         }}
       >
-        <Typography variant="h4">{`${(value).toFixed(2)}  Watts`}</Typography>
+        <Typography variant="h4">{`${(value).toFixed(2)}  Volts`}</Typography>
       </div>
     </Card>
   );

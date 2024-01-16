@@ -116,7 +116,7 @@ const RCard = () => {
         }}
       >
         <Typography variant="h4">
-          {`${(value).toFixed(2)} Watts`}
+          {`${(value).toFixed(2)} Volts`}
         </Typography>
       </div>
     </Card>
