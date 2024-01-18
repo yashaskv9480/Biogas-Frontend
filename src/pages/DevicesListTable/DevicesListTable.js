@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { Helmet } from "react-helmet-async";
-import { Button, TextField } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
+import { Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
-import Biogasapi from "../apis/Biogasapi";
 import Loader from "../../components/loading/Loading";
+import Biogasapi from "../apis/Biogasapi";
 
 
 const columns = [
     { id: 1, field: 'device_id', headerName: 'Device ID', flex: 1 },
     { id: 2, field: 'logitude', headerName: 'Longitude', flex: 1 },
     { id: 3, field: 'latitude', headerName: 'Latitude', flex: 1 },
-    { id: 4, field: 'description', headerName: 'Description', flex: 1 },
+    { id: 4, field: 'description', headerName: 'Location', flex: 1 },
 ];
 
 const DevicesListTable = () => {
