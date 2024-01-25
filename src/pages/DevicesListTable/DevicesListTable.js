@@ -8,9 +8,6 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../../components/loading/Loading";
 import Biogasapi from "../apis/Biogasapi";
 
-
-
-
 const DevicesListTable = () => {
     const [devices, setDevices] = useState([])
     const [loading, setLoading] = useState(true)

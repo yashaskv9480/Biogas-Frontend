@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
 import { Card, Typography, styled } from "@mui/material";
+import { useEffect, useState } from "react";
 import ReactSpeedometer from "react-d3-speedometer";
-import Biogasapi from "../../../pages/apis/Biogasapi";
 import Iconify from "../../../components/iconify"; // Assuming you have an Iconify component
+import Biogasapi from "../../../pages/apis/Biogasapi";
 
 const StyledIcon = styled("div")(({ theme }) => ({
   margin: "auto",
@@ -74,7 +74,8 @@ const Temp = () => {
         width: "100%",
         height: 350,
         margin:0,
-        marginTop:2 ,display: "flex",
+        marginTop:2 ,  
+        display: "flex",
         flexDirection: "column",
         textAlign: "center",
         boxShadow: 20,

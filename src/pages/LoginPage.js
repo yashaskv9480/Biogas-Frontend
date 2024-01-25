@@ -1,14 +1,13 @@
 import { Helmet } from 'react-helmet-async';
 // @mui
+import { Button, Container, Divider, Link, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { Link, Container, Typography, Divider, Stack, Button } from '@mui/material';
-// hooks
 import useResponsive from '../hooks/useResponsive';
-// components
-import Logo from '../components/logo';
-import Iconify from '../components/iconify';
-// sections
 import { LoginForm } from '../sections/auth/login';
+// components
+import Iconify from '../components/iconify';
+import Logo from '../components/logo';
+// sections
 
 // ----------------------------------------------------------------------
 

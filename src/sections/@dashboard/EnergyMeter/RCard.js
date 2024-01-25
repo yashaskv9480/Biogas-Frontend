@@ -80,8 +80,8 @@ const RCard = () => {
     <Card
       sx={{
         width: "100%", height:300,
-        margin:0,
-        marginTop:2 ,
+        margin: 0,
+        marginTop:2,
         display: "flex",
         flexDirection: "column",
         textAlign: "center",
@@ -116,7 +116,7 @@ const RCard = () => {
         }}
       >
         <Typography variant="h4">
-          {`${(value).toFixed(2)} Watts`}
+          {`${(value).toFixed(2)} Volts`}
         </Typography>
       </div>
     </Card>

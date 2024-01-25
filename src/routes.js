@@ -15,6 +15,7 @@ import SensorValuePage from './pages/SensorValue/SensorValuePage';
 import TodoListtable from './pages/TodoListTable/TodoListtable';
 import AddUser from './pages/UserAdd/UserAdd';
 import UserListTable from './pages/UserListTable/UserListTable';
+import WeightReport from './pages/ReportSensorValue/WeightReport';
 
 // ----------------------------------------------------------------------
 
@@ -39,6 +40,7 @@ export default function Router() {
         { path: 'sensor_values', element: <Report/>},
         { path: 'todo', element: <TodoListtable/>},
         { path: 'addtodo', element: <AddTodo/>},
+        { path: 'weight-logs', element: <WeightReport/>},
       ],
     },
     {path: 'sensor-value/:device_id', element: <SensorValuePage/>},

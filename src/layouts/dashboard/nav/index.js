@@ -6,6 +6,7 @@ import { Avatar, Box, Drawer, Link, Typography } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 // mock
 import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
 import account from '../../../_mock/account';
 // hooks
 import useResponsive from '../../../hooks/useResponsive';
@@ -42,7 +43,9 @@ export default function Nav({ openNav, onCloseNav }) {
   const isDesktop = useResponsive('up', 'lg');
 
   useEffect(() => {
-    const type = Cookies.get("type")
+    const token = Cookies.get("token")
+    const decoded = jwtDecode(token);
+    const type = decoded.type;
     settype(type)
 
     if (openNav) {

@@ -1,36 +1,25 @@
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { faker } from '@faker-js/faker';
-import { useState, useEffect, useLayoutEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
 
 // @mui
+
+import { Container, Grid } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { Grid, Container, Typography } from '@mui/material';
+import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
 import Loader from '../components/loading/Loading';
 
 // components
-import Iconify from '../components/iconify';
 // sections
-import {
-  AppTasks,
-  AppNewsUpdate,
-  AppOrderTimeline,
-  AppCurrentVisits,
-  AppWebsiteVisits,
-  AppTrafficBySite,
-  AppWidgetSummary,
-  AppCurrentSubject,
-  AppConversionRates,
-} from '../sections/@dashboard/app';
 import BCard from '../sections/@dashboard/EnergyMeter/BCard';
+import Frequency from '../sections/@dashboard/EnergyMeter/Frequency';
 import RCard from '../sections/@dashboard/EnergyMeter/RCard';
 import YCard from '../sections/@dashboard/EnergyMeter/YCard';
-import Frequency from '../sections/@dashboard/EnergyMeter/Frequency';
-import Weight from '../sections/@dashboard/phTempMethane/Weight';
 import Temp from '../sections/@dashboard/phTempMethane/Temp';
+import Weight from '../sections/@dashboard/phTempMethane/Weight';
+import WeightWithButton from '../sections/@dashboard/phTempMethane/WeightLoggerButtons';
 import PhComponent from '../sections/@dashboard/phTempMethane/pH';
-import Biogasapi from './apis/Biogasapi';
 // ----------------------------------------------------------------------
 
 export default function DashboardAppPage() {
@@ -67,17 +56,19 @@ export default function DashboardAppPage() {
     // } catch (err) {
     //   console.log(err.message);
     // }
-    
+
     setLoading()
     setIsValid(true)
   }
- 
-  useEffect(() => { 
-   authenticate();
+
+  useEffect(() => {
+  authenticate();
   },[] )
-  
-  
-  
+
+
+  const token = Cookies.get("token")
+  const decoded = jwtDecode(token);
+  console.log(decoded);
 console.log(recentvalue)
 
 // Use these variables in your component logic
@@ -85,7 +76,7 @@ console.log(recentvalue)
 
   return (
     <>
-      {loading 
+      {loading
         ?
         <Loader />
         :
@@ -96,53 +87,49 @@ console.log(recentvalue)
           </Helmet>
          
           <Container maxWidth="xl">
-            {/* <Typography variant="h4" sx={{ mb: 5 }}>
-              Hi, Welcome 
-            </Typography> */}
 
+          <Grid
+                container
+                item
+                xs={12}
+                justifyContent="center"
+                sx={{  marginLeft: '70px' }}
+              >
+                <Grid item xs={12} sm={6} md={3}>
+                  <WeightWithButton />
+                </Grid>
+              </Grid>
             <Grid container spacing={3}>
-              {/* <Grid item xs={12} sm={6} md={3}>
-                <AppWidgetSummary title="Add Users" total={100} icon={'mdi:user'} />
-              </Grid>
 
-              <Grid item xs={12} sm={6} md={3}>
-                <AppWidgetSummary title="Add Tenants" total={5} color="info" icon={'mdi:user'} />
-              </Grid>
-
-              <Grid item xs={12} sm={6} md={3}>
-                <AppWidgetSummary title="Add Devices" total={1000} color="warning" icon={'solar:devices-outline'} />
-              </Grid>
-
-              <Grid item xs={12} sm={6} md={3}>
-                <AppWidgetSummary title="View Reports" total={234} color="error" icon={'mdi:report-box'} />
-              </Grid> */}
 
               <Grid item xs={14} sm={8} md={4}>
                 <Temp/>
               </Grid>
-                
+
               <Grid item xs={14} sm={8} md={4}>
                 <Weight/>
               </Grid>
-                
-                <Grid item xs={14} sm={8} md={4}>
+
+              <Grid item xs={14} sm={8} md={4}>
                 <PhComponent/>
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
-             <RCard/>
+                <RCard/>
               </Grid>
 
               <Grid item xs={12} sm={6} md={3}>
-              <YCard/>
+                <YCard/>
               </Grid>
 
               <Grid item xs={12} sm={6} md={3}>
-              <BCard/>
+                <BCard/>
               </Grid>
 
               <Grid item xs={12} sm={6} md={3}>
-              <Frequency/>
+                <Frequency/>
               </Grid>
+
+                
                </Grid>
           </Container>
         </>

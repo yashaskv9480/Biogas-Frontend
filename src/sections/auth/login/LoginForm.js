@@ -7,6 +7,7 @@ import { Checkbox, IconButton, InputAdornment, Link, Stack, TextField } from '@m
 import Cookies from 'js-cookie';
 // components
 import Iconify from '../../../components/iconify';
+import Biogasapi from '../../../pages/apis/Biogasapi';
 
 // ----------------------------------------------------------------------
 
@@ -19,32 +20,25 @@ export default function LoginForm() {
 
   const handleClick = async() => {
     try {
-      const response = await fetch('http://localhost:3500/api/v1/login', {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ email, password })
-      })
-      console.log(response)
-
-      if(response.status === 200){
-        const jsonData = await response.json();
-        console.log(jsonData)
-        if(jsonData.token){
-          Cookies.set('token', jsonData.token, {expires: 1})
-          Cookies.set('type', jsonData.type, {expires: 1})
-          Cookies.set('uid', jsonData.uid, {expires: 1})
-        
+      const response = await Biogasapi.post("/login", { email, password });
+    
+      if (response.status === 200) {
+        const jsonData = response.data;
+    
+        if (jsonData.token) {
+          Cookies.set('token', jsonData.token, { expires: 1 });
           navigate('/dashboard/app', { replace: true });
-        } 
-      } else {
-        alert("Wrong email or password")
+        }
+      }  else {
+        alert("Wrong email and password");
       }
-      
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
 
+    } catch (err) {
+      alert("Wrong email and password! Please contact admin")
+      console.error("Error during login:", err.message);
+    }
+  }
+    
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   }
@@ -57,11 +51,12 @@ export default function LoginForm() {
     const token = Cookies.get('token');
     console.log(token)
     if (token) {
-      const response = await fetch('http://localhost:3500/api/v1/authenticate', {
-        method: "GET",
-        headers: { "Content-Type": "application/json", "Authorization": token },
-      })
-
+      const response = await Biogasapi.get("/authenticate", {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token,
+        },
+      });
       console.log(response);
 
       if (response.status === 200) {
