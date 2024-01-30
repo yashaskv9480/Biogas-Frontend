@@ -46,22 +46,49 @@ const DevicesListTable = () => {
         }
       };  
 
+      const navigateaddslave = async (deviceId) => {
+        navigate(`/add-slave/${deviceId}`, { replace: true });
+      };
+      
       const columns = [
         { id: 1, field: 'device_id', headerName: 'Device ID', flex: 1 },
         { id: 2, field: 'logitude', headerName: 'Longitude', flex: 1 },
         { id: 3, field: 'latitude', headerName: 'Latitude', flex: 1 },
         { id: 4, field: 'description', headerName: 'Description', flex: 1 },
+        // {
+        //     field: 'delete',
+        //     headerName: 'Delete',
+        //     flex: 1,
+        //     renderCell: (params) => (
+        //         <button className="btn btn-danger" onClick={() => {deletedevice(params.row.device_id)}}>
+        //             Delete
+        //         </button>
+                
+        //     ),
+        // },
         {
-            field: 'delete',
-            headerName: 'Delete',
+            field: 'add_slave',
+            headerName: 'Add Slave',
             flex: 1,
             renderCell: (params) => (
-                <button className="btn btn-danger" onClick={() => {deletedevice(params.row.device_id)}}>
-                    Delete
+                <button className="btn btn-primary" onClick={() => navigateaddslave(params.row.device_id)}>
+                    Add Slave
+                </button>
+            ),
+        },
+        
+        {
+            field: 'view_slave',
+            headerName: 'View Slave',
+            flex: 1,
+            renderCell: (params) => (
+                <button className="btn btn-primary" onClick={() => {navigateaddslave(params.row.device_id)}} >
+                    View Slave
                 </button>
                 
             ),
         },
+        
     ];
 
     useEffect(() => {

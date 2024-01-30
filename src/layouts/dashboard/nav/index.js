@@ -41,18 +41,28 @@ export default function Nav({ openNav, onCloseNav }) {
   const [type,settype] = useState("");
 
   const isDesktop = useResponsive('up', 'lg');
+  const token = Cookies.get("token")
 
+  
   useEffect(() => {
-    const token = Cookies.get("token")
-    const decoded = jwtDecode(token);
-    const type = decoded.type;
-    settype(type)
 
     if (openNav) {
       onCloseNav();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
+
+  useEffect(() => {
+
+    const user = token ? jwtDecode(token) : undefined;
+    console.log(user)
+    const usertype = user? user.type : undefined;
+    settype(usertype)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+ 
 
   const renderContent = (
     <Scrollbar
@@ -80,7 +90,7 @@ export default function Nav({ openNav, onCloseNav }) {
               </Typography>
             </Box>
           </StyledAccount>
-        </Link>
+        </Link> 
       </Box>
 
       <NavSection data={navConfig(type)} />

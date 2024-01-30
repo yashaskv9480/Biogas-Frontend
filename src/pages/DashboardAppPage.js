@@ -66,9 +66,9 @@ export default function DashboardAppPage() {
   },[] )
 
 
-  const token = Cookies.get("token")
-  const decoded = jwtDecode(token);
-  console.log(decoded);
+  // const token = Cookies.get("token")
+  // const decoded = jwtDecode(token);
+  // console.log(decoded);
 console.log(recentvalue)
 
 // Use these variables in your component logic

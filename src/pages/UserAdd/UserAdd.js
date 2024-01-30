@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { LoadingButton } from '@mui/lab';
 import { Stack, TextField } from '@mui/material';
 import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
 import Biogasapi from '../apis/Biogasapi';
 
 
@@ -36,8 +37,10 @@ const AddUser = (role) => {
     }
 
     const handleAddDeviceSubmit = async () => {
-        const adminId = Cookies.get('uid');
-        const type = Cookies.get('type');
+        const token = Cookies.get('token');
+        const user = token ? jwtDecode(token) : undefined;
+        const adminId = user? user.id : undefined;
+        const type = user ? user.type : undefined;
         let role;   
         if (type === 'admin') {
             role = 'manager';
@@ -61,6 +64,7 @@ const AddUser = (role) => {
             if (response.status !== 200) {
                 alert("There was a problem");
             } else {
+                alert("Succesfully Added")
                 navigate('/dashboard/app'); 
             }
         } catch (err) {

@@ -1,9 +1,6 @@
-import { Navigate, useNavigate, useRoutes } from 'react-router-dom';
-// layouts
 import Cookies from 'js-cookie';
-import { useEffect } from 'react';
+import { Navigate, useNavigate, useRoutes } from 'react-router-dom';
 import DashboardLayout from './layouts/dashboard';
-//
 import AddDevice from './pages/AddDevice/AddDeviceForm';
 import AddTodo from './pages/AddTodo/Addtodo';
 import DashboardAppPage from './pages/DashboardAppPage';
@@ -16,25 +13,19 @@ import SensorValuePage from './pages/SensorValue/SensorValuePage';
 import TodoListtable from './pages/TodoListTable/TodoListtable';
 import AddUser from './pages/UserAdd/UserAdd';
 import UserListTable from './pages/UserListTable/UserListTable';
-
-// ----------------------------------------------------------------------
+import AddSlave from './pages/AddSlave/AddSlaveform';
 
 export default function Router() {
   const navigate = useNavigate();
+  const token = Cookies.get('token');
 
-  useEffect(() => {
-    const token = Cookies.get('token')
-    if(!token){
-      navigate('/login',{replace:true})
-    }
-},[navigate]);
-
-  const routes = useRoutes([
-      {
-        path: '/',
-        element: <LoginPage/>,index: true, 
-      },
-      {
+  return useRoutes([
+    {
+      path: '/',
+      element: <LoginPage />,
+      index: true,
+    },
+    {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
@@ -50,19 +41,11 @@ export default function Router() {
         { path: 'todo', element: <TodoListtable/>},
         { path: 'addtodo', element: <AddTodo/>},
         { path: 'weight-logs', element: <WeightReport/>},
+        { path: 'add-slave/:device_id' , element: <AddSlave/>}
       ],
     },
-    {path: 'sensor-value/:device_id', element: <SensorValuePage/>},
-    { 
-      path: 'login',
-      element: <LoginPage />,
-    },
-    {
-      path: '*',
-      element: <Navigate to="/404" replace />,
-    }
-
+    { path: 'sensor-value/:device_id', element: <SensorValuePage /> },
+    { path: 'login', element: <LoginPage /> },
+    { path: '*', element: <Navigate to="/404" replace /> },
   ]);
-
-  return routes;
 }

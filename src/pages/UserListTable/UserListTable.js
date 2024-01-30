@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { Helmet } from "react-helmet-async";
-import { Button, TextField } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
+import { Button, TextField } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 
 import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-
 import Loader from "../../components/loading/Loading";
 
-import "./UserListTable.css"
-
+import "./UserListTable.css";
 
 const columns = [
     { field: 'name', headerName: 'User Name', flex: 1 },
@@ -25,6 +24,9 @@ const UserListTable = () => {
     const [searchQuery, setSearchQuery] = useState("")
 
     const navigate = useNavigate()
+    const token = Cookies.get('token');
+    const user = token ? jwtDecode(token): undefined;
+    const usertype = user ? user.type : undefined;
 
     const navigateHandle = () => {
         navigate('../add-user', { replace: true });
@@ -79,14 +81,15 @@ const UserListTable = () => {
             <Helmet>
                 <title> Sensor values </title>
             </Helmet>
+            {usertype === 'manager' && (
             <Button
-                style={{ marginBottom: '16px' }}
-                variant="contained"
-                startIcon={<AddIcon />}
-                onClick={navigateHandle}
+            style={{ marginBottom: '16px' }}
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={navigateHandle}
             >
-                Add User
-            </Button>
+            Add User
+            </Button> )}
             {loading ? (
                 <Loader />
             ) : users.length > 0 ? (
