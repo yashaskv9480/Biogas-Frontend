@@ -21,7 +21,7 @@ const StyledIcon = styled("div")(({ theme }) => ({
     )} 100%)`,
 }));
 
-const Temp = () => {
+const Temp = ({deviceId}) => {
  const [temperature,settemperature] = useState(0.0)
   const [value, setValue] = useState(0.5); // Initial value
   const [isPopped, setIsPopped] = useState(false);
@@ -31,7 +31,7 @@ const Temp = () => {
   useEffect(() => {
     const fetchrecentvalues = async () => {
       try {
-          const response = await Biogasapi.get("/dashboard");
+          const response = await Biogasapi.get(`/dashboard/${deviceId}`);
   
           if (!response.error) {
 
@@ -40,7 +40,6 @@ const Temp = () => {
             // Update only the 'r' value in the state
             console.log(firstSensorValue)
             settemperature(firstSensorValue.temperature ? firstSensorValue.temperature : 0.0);            
-        //    console.log(firstSensorValue.r)
 
           }
       } catch (err) {
@@ -50,7 +49,6 @@ const Temp = () => {
 
     const interval = setInterval(() => {
       fetchrecentvalues();
-  //    console.log(r)
 
     }, 3000); // Update every 3 seconds
 

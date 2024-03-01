@@ -37,7 +37,7 @@ const getMethaneColor = (methane) => {
   return "#lightgoldenrodyellow";
 };
 
-const Weight = () => {
+const Weight = ({deviceId}) => {
   const [weight,setweight] = useState(0.0)
   const [value, setValue] = useState(0.5); // Initial value
   const [isPopped, setIsPopped] = useState(false);
@@ -47,7 +47,7 @@ const Weight = () => {
   useEffect(() => {
     const fetchrecentvalues = async () => {
       try {
-          const response = await Biogasapi.get("/dashboard");
+        const response = await Biogasapi.get(`/dashboard/${deviceId}`);
   
           if (!response.error) {
 

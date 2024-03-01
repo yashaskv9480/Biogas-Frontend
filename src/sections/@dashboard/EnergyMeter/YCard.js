@@ -21,7 +21,7 @@ const StyledIcon = styled("div")(({ theme }) => ({
     )} 100%)`,
 }));
 
-const YCard = () => {
+const YCard = ({deviceId}) => {
   const [y,sety] = useState(0.0)
   const [value, setValue] = useState(0.5); // Initial value
   const [isPopped, setIsPopped] = useState(false);
@@ -31,7 +31,7 @@ const YCard = () => {
   useEffect(() => {
     const fetchrecentvalues = async () => {
       try {
-          const response = await Biogasapi.get("/dashboard");
+        const response = await Biogasapi.get(`/dashboard/${deviceId}`);
   
           if (!response.error) {
 

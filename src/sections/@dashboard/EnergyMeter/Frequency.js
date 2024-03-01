@@ -30,7 +30,7 @@ const GaugePopup = styled("div")({
   transition: "transform 0.3s ease-in-out",
 });
 
-const Frequency = () => {
+const Frequency = ({deviceId}) => {
   const [frequency,setfrequency] = useState(0.0)
   const [value, setValue] = useState(0.5); // Initial value
   const [isPopped, setIsPopped] = useState(false);
@@ -40,7 +40,7 @@ const Frequency = () => {
   useEffect(() => {
     const fetchrecentvalues = async () => {
       try {
-          const response = await Biogasapi.get("/dashboard");
+        const response = await Biogasapi.get(`/dashboard/${deviceId}`);
   
           if (!response.error) {
 

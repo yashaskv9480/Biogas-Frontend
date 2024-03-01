@@ -47,10 +47,14 @@ const DevicesListTable = () => {
       };  
 
       const navigateaddslave = async (deviceId) => {
-        navigate(`/add-slave/${deviceId}`, { replace: true });
-      };
+        navigate(`../add-slave/${deviceId}`, { replace: true });
+      };    
       
-      const columns = [
+      const navigatedashboard = async (deviceId) => {
+        navigate(`../app/${deviceId}`,{replace: true});
+      };
+
+        const columns = [
         { id: 1, field: 'device_id', headerName: 'Device ID', flex: 1 },
         { id: 2, field: 'logitude', headerName: 'Longitude', flex: 1 },
         { id: 3, field: 'latitude', headerName: 'Latitude', flex: 1 },
@@ -88,6 +92,17 @@ const DevicesListTable = () => {
                 
             ),
         },
+        {
+            field: 'view_dashboard',
+            headerName: 'View Dashboard',
+            flex: 1,
+            renderCell: (params) => (
+                <button className="btn btn-primary" onClick={() => {navigatedashboard(params.row.device_id)}} >
+                    View Dashboard
+                </button>
+                
+            ),
+        }
         
     ];
 
@@ -95,9 +110,13 @@ const DevicesListTable = () => {
 
         const fetchDevicesList = async () => {
             const uid = Cookies.get('uid')
+            const token = Cookies.get('token')
             try {
-                const response = await Biogasapi.get("/getdevices");
-                
+                const response = await Biogasapi.get("/getdevices", {
+                    headers: {
+                        Authorization: `${token}`
+                    }
+                });                
                 if(!response.error){
                     setDevices(response.data);
                     console.log(devices)

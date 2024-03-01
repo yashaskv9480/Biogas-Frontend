@@ -1,14 +1,11 @@
-import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
-import { Link, useNavigate } from 'react-router-dom';
-
-// @mui
-
 import { Container, Grid } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import Cookies from 'js-cookie';
-import { jwtDecode } from 'jwt-decode';
+import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Loader from '../components/loading/Loading';
+import Biogasapi from './apis/Biogasapi';
 
 // components
 // sections
@@ -25,37 +22,33 @@ import PhComponent from '../sections/@dashboard/phTempMethane/pH';
 export default function DashboardAppPage() {
   const theme = useTheme();
   const navigate = useNavigate();
-  const [recentvalue,setrecentvalue] = useState([])
-
+  const {deviceId} = useParams();
   const [loading, setLoading] = useState(true);
   const [isValid, setIsValid] = useState(false);
 
   const authenticate = async () => {
-    // try {
-    //   // get Cookie
-    //   const value = Cookies.get('token');
-    //   if (value) {
-    //     const response = await fetch('http://localhost:4001/api/authenticate', {
-    //       method: "GET",
-    //       headers: { "Content-Type": "application/json", "Authorization": value },
-    //     })
-
-
-    //     if (response.status !== 200) {
-    //       setLoading(false)
-    //       // alert("Session expired! Please provide login details again")
-    //       // navigate('/login', { replace: true });
-    //     } else {
-    //       setLoading(false)
-    //       setIsValid(true)
-    //     }
-    //   } else {
-    //     setLoading(false)
-    //     navigate('/login', { replace: true });
-    //   }
-    // } catch (err) {
-    //   console.log(err.message);
-    // }
+    try {
+      const value = Cookies.get('token');
+      if (value) {
+        const response = await Biogasapi.get("/authenticate", {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": value,
+          },
+        })
+     if (response.status !== 200) {
+          setLoading(false)
+        } else {
+          setLoading(false)
+          setIsValid(true)
+        }  
+      } else {
+        setLoading(false)
+        navigate('/login', { replace: true });
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
 
     setLoading()
     setIsValid(true)
@@ -64,16 +57,7 @@ export default function DashboardAppPage() {
   useEffect(() => {
   authenticate();
   },[] )
-
-
-  // const token = Cookies.get("token")
-  // const decoded = jwtDecode(token);
-  // console.log(decoded);
-console.log(recentvalue)
-
-// Use these variables in your component logic
-
-
+  console.log(deviceId);
   return (
     <>
       {loading
@@ -96,37 +80,37 @@ console.log(recentvalue)
                 sx={{  marginLeft: '70px' }}
               >
                 <Grid item xs={12} sm={6} md={3}>
-                  <WeightWithButton />
+                  <WeightWithButton deviceId={deviceId} />
                 </Grid>
               </Grid>
             <Grid container spacing={3}>
 
 
               <Grid item xs={14} sm={8} md={4}>
-                <Temp/>
+                <Temp deviceId={deviceId}/>
               </Grid>
 
               <Grid item xs={14} sm={8} md={4}>
-                <Weight/>
+                <Weight deviceId={deviceId}/>
               </Grid>
 
               <Grid item xs={14} sm={8} md={4}>
-                <PhComponent/>
+                <PhComponent deviceId={deviceId}/>
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
-                <RCard/>
-              </Grid>
-
-              <Grid item xs={12} sm={6} md={3}>
-                <YCard/>
+                <RCard deviceId={deviceId}/>
               </Grid>
 
               <Grid item xs={12} sm={6} md={3}>
-                <BCard/>
+                <YCard deviceId={deviceId}/>
               </Grid>
 
               <Grid item xs={12} sm={6} md={3}>
-                <Frequency/>
+                <BCard deviceId={deviceId}/>
+              </Grid>
+
+              <Grid item xs={12} sm={6} md={3}>
+                <Frequency deviceId={deviceId}/>
               </Grid>
 
                 

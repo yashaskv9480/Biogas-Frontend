@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
 import { Card, Typography, styled } from "@mui/material";
+import { useEffect, useState } from "react";
 import ReactSpeedometer from "react-d3-speedometer";
-import Biogasapi from "../../../pages/apis/Biogasapi";
 import Iconify from "../../../components/iconify"; // Assuming you have an Iconify component
+import Biogasapi from "../../../pages/apis/Biogasapi";
 
 const StyledIcon = styled("div")(({ theme }) => ({
   margin: "auto",
@@ -37,17 +37,16 @@ const getPhColor = (ph) => {
   return "#lightgoldenrodyellow";
 };
 
-const PhComponent = () => {
+const PhComponent = ({deviceId}) => {
    const [ph,setph] = useState(0.0)
-  const [value, setValue] = useState(0.5); // Initial value
-  const [isPopped, setIsPopped] = useState(false);
+  const [value, setValue] = useState(0.5);
 
 
   // Simulate live data updates
   useEffect(() => {
     const fetchrecentvalues = async () => {
       try {
-          const response = await Biogasapi.get("/dashboard");
+        const response = await Biogasapi.get(`/dashboard/${deviceId}`);
   
           if (!response.error) {
 
@@ -75,11 +74,8 @@ const PhComponent = () => {
   useEffect(() => {
 //    console.log(r); // You can remove or modify this line
     setValue(ph);
-    setIsPopped(true);
-
     // Reset the popping effect after a short delay
     setTimeout(() => {
-      setIsPopped(false);
     }, 300);
   }, [ph]);
 

@@ -1,7 +1,7 @@
-import Cookies from 'js-cookie';
 import { Navigate, useNavigate, useRoutes } from 'react-router-dom';
 import DashboardLayout from './layouts/dashboard';
 import AddDevice from './pages/AddDevice/AddDeviceForm';
+import AddSlave from './pages/AddSlave/AddSlaveform';
 import AddTodo from './pages/AddTodo/Addtodo';
 import DashboardAppPage from './pages/DashboardAppPage';
 import DevicesListTable from './pages/DevicesListTable/DevicesListTable';
@@ -13,11 +13,9 @@ import SensorValuePage from './pages/SensorValue/SensorValuePage';
 import TodoListtable from './pages/TodoListTable/TodoListtable';
 import AddUser from './pages/UserAdd/UserAdd';
 import UserListTable from './pages/UserListTable/UserListTable';
-import AddSlave from './pages/AddSlave/AddSlaveform';
 
 export default function Router() {
   const navigate = useNavigate();
-  const token = Cookies.get('token');
 
   return useRoutes([
     {
@@ -30,6 +28,7 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         { element: <Navigate to="/dashboard/app" />, index: false },
+        {path: '/dashboard/app/:deviceId', element: <DashboardAppPage />},
         { path: 'app', element: <DashboardAppPage /> },
         { path: 'user', element: <UserListTable /> },
         { path: 'managers', element: <ManagerListTable /> },

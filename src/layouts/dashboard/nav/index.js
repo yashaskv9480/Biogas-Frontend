@@ -55,7 +55,6 @@ export default function Nav({ openNav, onCloseNav }) {
   useEffect(() => {
 
     const user = token ? jwtDecode(token) : undefined;
-    console.log(user)
     const usertype = user? user.type : undefined;
     settype(usertype)
 
