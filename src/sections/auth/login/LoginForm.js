@@ -1,18 +1,22 @@
-import { useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // @mui
 import { LoadingButton } from '@mui/lab';
 import { Checkbox, IconButton, InputAdornment, Link, Stack, TextField } from '@mui/material';
-
 import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
 // components
 import Iconify from '../../../components/iconify';
 import Biogasapi from '../../../pages/apis/Biogasapi';
 
-// ----------------------------------------------------------------------
+const AuthContext = createContext();
+export const useAuth = () => useContext(AuthContext);
+
+
 
 export default function LoginForm() {
   const navigate = useNavigate();
+  const { setRole } = useAuth(); 
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,6 +31,8 @@ export default function LoginForm() {
     
         if (jsonData.token) {
           Cookies.set('token', jsonData.token, { expires: 1 });
+          const role = jwtDecode(jsonData.token)
+          setRole(role);
           navigate('/dashboard/app', { replace: true });
         }
       }  else {
