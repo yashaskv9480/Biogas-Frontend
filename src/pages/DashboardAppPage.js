@@ -17,6 +17,7 @@ import Temp from '../sections/@dashboard/phTempMethane/Temp';
 import Weight from '../sections/@dashboard/phTempMethane/Weight';
 import WeightWithButton from '../sections/@dashboard/phTempMethane/WeightLoggerButtons';
 import PhComponent from '../sections/@dashboard/phTempMethane/pH';
+
 // ----------------------------------------------------------------------
 
 export default function DashboardAppPage() {
@@ -25,9 +26,10 @@ export default function DashboardAppPage() {
   const {deviceId} = useParams();
   const [loading, setLoading] = useState(true);
   const [isValid, setIsValid] = useState(false);
-
+  
   const authenticate = async () => {
     try {
+
       const value = Cookies.get('token');
       if (value) {
         const response = await Biogasapi.get("/authenticate", {

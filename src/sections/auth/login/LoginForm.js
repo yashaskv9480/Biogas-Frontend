@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // @mui
 import { LoadingButton } from '@mui/lab';
@@ -8,15 +8,10 @@ import { jwtDecode } from 'jwt-decode';
 // components
 import Iconify from '../../../components/iconify';
 import Biogasapi from '../../../pages/apis/Biogasapi';
-
-const AuthContext = createContext();
-export const useAuth = () => useContext(AuthContext);
-
-
+import { setRole } from './useAuth';
 
 export default function LoginForm() {
   const navigate = useNavigate();
-  const { setRole } = useAuth(); 
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,7 +27,8 @@ export default function LoginForm() {
         if (jsonData.token) {
           Cookies.set('token', jsonData.token, { expires: 1 });
           const role = jwtDecode(jsonData.token)
-          setRole(role);
+          console.log(role)
+          setRole(role.type)
           navigate('/dashboard/app', { replace: true });
         }
       }  else {

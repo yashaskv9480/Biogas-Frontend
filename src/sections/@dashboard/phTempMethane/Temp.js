@@ -1,6 +1,7 @@
 import { Card, Typography, styled } from "@mui/material";
 import { useEffect, useState } from "react";
 import ReactSpeedometer from "react-d3-speedometer";
+import { useAuth } from "../../auth/login/useAuth";
 import Iconify from "../../../components/iconify"; // Assuming you have an Iconify component
 import Biogasapi from "../../../pages/apis/Biogasapi";
 
@@ -39,6 +40,8 @@ const Temp = ({deviceId}) => {
 
             // Update only the 'r' value in the state
             console.log(firstSensorValue)
+
+          
             settemperature(firstSensorValue.temperature ? firstSensorValue.temperature : 0.0);            
 
           }

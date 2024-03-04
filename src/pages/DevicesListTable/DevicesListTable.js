@@ -6,9 +6,11 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/loading/Loading";
+import { useAuth } from '../../sections/auth/login/useAuth';
 import Biogasapi from "../apis/Biogasapi";
 
 const DevicesListTable = () => {
+    const role = useAuth();
     const [devices, setDevices] = useState([])
     const [loading, setLoading] = useState(true)
     const [searchQuery, setSearchQuery] = useState("")
@@ -138,14 +140,16 @@ const DevicesListTable = () => {
             <Helmet>
                 <title> Biogas | Devices </title>
             </Helmet>
-            <Button
-                style={{ marginBottom: '16px' }}
-                variant="contained"
-                startIcon={<AddIcon />}
-                onClick={navigateHandle}
-            >
-                Add device
-            </Button>
+            {role === 'admin' && ( 
+        <Button
+          style={{ marginBottom: '16px' }}
+          variant="contained"
+          startIcon={<AddIcon />}
+          onClick={navigateHandle}
+        >
+          Add device
+        </Button>
+      )}
             {loading ? (
                 <Loader />
             ) : devices.length > 0 ? (
