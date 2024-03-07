@@ -1,13 +1,11 @@
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 // @mui
 import { Avatar, Box, Drawer, Link, Typography } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 // mock
-import Cookies from 'js-cookie';
-import { jwtDecode } from 'jwt-decode';
-import account from '../../../_mock/account';
+import Account from '../../../_mock/account';
 // hooks
 import useResponsive from '../../../hooks/useResponsive';
 // components
@@ -38,10 +36,8 @@ Nav.propTypes = {
 
 export default function Nav({ openNav, onCloseNav }) {
   const { pathname } = useLocation();
-  const [type,settype] = useState("");
 
   const isDesktop = useResponsive('up', 'lg');
-  const token = Cookies.get("token")
 
   
   useEffect(() => {
@@ -52,14 +48,6 @@ export default function Nav({ openNav, onCloseNav }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  useEffect(() => {
-
-    const user = token ? jwtDecode(token) : undefined;
-    const usertype = user? user.type : undefined;
-    settype(usertype)
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
  
 
@@ -77,22 +65,22 @@ export default function Nav({ openNav, onCloseNav }) {
       <Box sx={{ mb: 5, mx: 2.5 }}>
         <Link underline="none">
           <StyledAccount>
-            <Avatar src={account.photoURL} alt="photoURL" />
+            <Avatar src={Account.photoURL} alt="photoURL" />
 
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {account.displayName}
+                {Account.displayName}
               </Typography>
 
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {account.role}
+                {Account.role}
               </Typography>
             </Box>
           </StyledAccount>
         </Link> 
       </Box>
 
-      <NavSection data={navConfig(type)} />
+      <NavSection data={navConfig()} />
     </Scrollbar>
   );
 

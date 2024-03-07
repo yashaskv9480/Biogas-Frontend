@@ -5,12 +5,14 @@ import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
+import Account from '../../_mock/account';
 import Loader from "../../components/loading/Loading";
-import { useAuth } from '../../sections/auth/login/useAuth';
+import useAuth from '../../sections/auth/login/useAuth';
 import Biogasapi from "../apis/Biogasapi";
 
 const DevicesListTable = () => {
-    const role = useAuth();
+    const accountInfo = <Account />;
+    const {isAdmin,user} = useAuth();
     const [devices, setDevices] = useState([])
     const [loading, setLoading] = useState(true)
     const [searchQuery, setSearchQuery] = useState("")
@@ -134,13 +136,12 @@ const DevicesListTable = () => {
         fetchDevicesList();
     }, [])
 
-    console.log(devices)
     return (
         <>
             <Helmet>
                 <title> Biogas | Devices </title>
             </Helmet>
-            {role === 'admin' && ( 
+            {isAdmin && ( 
         <Button
           style={{ marginBottom: '16px' }}
           variant="contained"

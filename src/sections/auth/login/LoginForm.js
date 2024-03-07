@@ -8,7 +8,6 @@ import { jwtDecode } from 'jwt-decode';
 // components
 import Iconify from '../../../components/iconify';
 import Biogasapi from '../../../pages/apis/Biogasapi';
-import { setRole } from './useAuth';
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -28,7 +27,6 @@ export default function LoginForm() {
           Cookies.set('token', jsonData.token, { expires: 1 });
           const role = jwtDecode(jsonData.token)
           console.log(role)
-          setRole(role.type)
           navigate('/dashboard/app', { replace: true });
         }
       }  else {

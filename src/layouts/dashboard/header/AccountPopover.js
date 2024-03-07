@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Avatar, Box, Divider, IconButton, MenuItem, Popover, Stack, Typography } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 // mocks_
-import account from '../../../_mock/account';
+import Account from '../../../_mock/account';
 
 // ----------------------------------------------------------------------
 
@@ -52,6 +52,7 @@ export default function AccountPopover() {
     navigate('/login', { replace: true });
     setOpen(null);
   }
+  console.log(Account.displayName)
 
   return (
     <>
@@ -72,7 +73,7 @@ export default function AccountPopover() {
           }),
         }}
       >
-        <Avatar src={account.photoURL} alt="photoURL" />
+        <Avatar src={Account.photoURL} alt="photoURL" />
       </IconButton>
 
       <Popover
@@ -94,14 +95,14 @@ export default function AccountPopover() {
           },
         }}
       >
-        <Box sx={{ my: 1.5, px: 2.5 }}>
-          <Typography variant="subtitle2" noWrap>
-            {account.displayName}
-          </Typography>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
-          </Typography>
-        </Box>
+          <Box sx={{ my: 1.5, px: 2.5 }}>
+            <Typography variant="subtitle2" noWrap>
+              {Account.displayName}
+            </Typography>
+            <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+              {Account.email}
+            </Typography>
+          </Box>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
