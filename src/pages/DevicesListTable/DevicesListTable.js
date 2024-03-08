@@ -24,10 +24,6 @@ const DevicesListTable = () => {
         navigate('../add-device');
     }
 
-    const navigatedevicemanagement = () => {
-        navigate('../manage-device-roles');
-    }
-
     const devicesWithUniqueId = devices.map((device, index) => ({
         id: device.device_id, // Use device_id as the unique identifier
         ...device,
@@ -158,17 +154,6 @@ const DevicesListTable = () => {
           onClick={navigateHandle}
         >
           Add device
-        </Button>
-      )
-      }
-            {isAdmin && ( 
-        <Button
-          style={{ marginBottom: '16px' , marginLeft: '20px'}}
-          variant="contained"
-          startIcon={<PersonIcon />}
-          onClick={navigatedevicemanagement}
-        >
-          Manage Device Roles 
         </Button>
       )
       }

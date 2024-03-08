@@ -14,11 +14,11 @@ const SlaveListTable = () => {
 
     const navigate = useNavigate()
 
-    const filteredslave = slave.map((slave, index) => ({
-        id: slave.slave_id, 
+    const filteredslave = slave.map((slave) => ({
+        id: `${slave.slave_id}-${slave.reg_add}`,
         ...slave,
     }));
-
+       
 
       const deleteslave = async (deviceId,slaveId,regadd) => {
         const confirmed = window.confirm("The values of the slave will be deleted !!! Not recommeded !!! Are you sure??");

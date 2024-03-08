@@ -28,6 +28,11 @@ const NavConfig = () => {
       icon: icon('ic_lock'),
     },
     {
+      title: 'Device Management',
+      path: '/dashboard/manage-device-roles',
+      icon: icon('ic_lock'),
+    },
+    {
       title: 'Report',
       path: '/dashboard/sensor_values',
       icon: icon('ic_analytics'),
@@ -40,9 +45,9 @@ const NavConfig = () => {
   ];
 
   if (isManager) { 
-    config = config.filter((item) => item.title !== 'Manager'); }
+    config = config.filter((item) => item.title !== 'Manager' && item.title !== 'Device Management'); }
      else if (isUser) 
-     { config = config.filter((item) => item.title !== 'Manager' && item.title !== 'user'); }
+     { config = config.filter((item) => item.title !== 'Manager' && item.title !== 'user' && item.title !== 'Device Management');}
 
   return config;
 };
