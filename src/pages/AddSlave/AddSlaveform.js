@@ -1,10 +1,9 @@
 // import React from "react";
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 // @mui
 import { LoadingButton } from '@mui/lab';
 import { Stack, TextField } from '@mui/material';
-import Cookies from 'js-cookie';
 import Biogasapi from '../apis/Biogasapi';
 
 // components
@@ -14,40 +13,51 @@ import Biogasapi from '../apis/Biogasapi';
 
 const AddSlave = () => {
     const navigate = useNavigate();
+    const {deviceId} = useParams();
+    const [slaveId, setslaveId] = useState("")
+    const [regadd, setregadd] = useState("")
+    const [keys, setkeys] = useState("")
+    const [minvalue, setminvalue] = useState()
+    const [maxValue, setmaxValue] = useState()
+    const [siUnits, setsiUnits] = useState()
 
-    const [macID, setMacID] = useState("")
-    const [longitude, setLongitude] = useState("")
-    const [latitude, setLatitude] = useState("")
-    const [description, setDescription] = useState("")
 
-    const handleMacChange = (event) => {
-        setMacID(event.target.value);
+    const handleslaveidChange = (event) => {
+        setslaveId(event.target.value);
     }
-    const handleLogitudeChange = (event) => {
-        setLongitude(event.target.value);
+    const handleregaddChange = (event) => {
+        setregadd(event.target.value);
     }
-    const handleLatitudeChange = (event) => {
-        setLatitude(event.target.value);
+    const handlekeysChange = (event) => {
+        setkeys(event.target.value);
     }
-    const handleDescriptionChange = (event) => {
-        setDescription(event.target.value);
+    const handleminvalueChange = (event) => {
+        setminvalue(event.target.value);
+    }
+    const handlemaxValueChange = (event) => {
+        setmaxValue(event.target.value);
+    }
+    const handlesiunitsChange = (event) => {
+        setsiUnits(event.target.value);
     }
 
-    const handleAddDeviceSubmit = async() => {
-        const uid = Cookies.get('uid')
+    const handleAddSlaveSubmit = async() => {
         try {
-            const response = await Biogasapi.post("/adddevice",{
-                device_id:macID,
-                longitude,
-                latitude,
-                description
+            const response = await Biogasapi.post(`add-slave/${deviceId}`,{
+                slave_id:slaveId,
+                reg_add:regadd,
+                keys,
+                minvalue,
+                maxvalue:maxValue,
+                siunit:siUnits    
             })
 
             if(response.status !== 200){
                 alert("There was a problem")
             }
             else{
-                navigate('/dashboard/app')
+                alert("Slave added Successfull")
+                navigate('../devices')
             }      
         } catch (err) {
             console.log(err.message);
@@ -56,17 +66,18 @@ const AddSlave = () => {
 
     return (
         <div className="add-device-container">
+                <h1>Add Slave for device {deviceId}</h1>
             <Stack spacing={3}>
-                <TextField name="email" label="Device MAC Id" value={macID} onChange={handleMacChange} required/>
-                <TextField name="logitude" label="logitude" value={longitude} onChange={handleLogitudeChange} required/>
-                <TextField name="latitude" label="latitude" value={latitude} onChange={handleLatitudeChange} required/>
-                <TextField name="description" label="description" value={description} onChange={handleDescriptionChange} required/>
-                
-
+                <TextField name="slaveId" label="Slave Id" value={slaveId} onChange={handleslaveidChange} required/>
+                <TextField name="regadd" label="Register Address" value={regadd} onChange={handleregaddChange} required/>
+                <TextField name="keys" label="Keys" value={keys} onChange={handlekeysChange} required/>
+                <TextField name="minvalue" label="Maximum Value" value={minvalue} onChange={handleminvalueChange} required/>
+                <TextField name="maxvalue" label="Minimum Value" value={maxValue} onChange={handlemaxValueChange} required/>
+                <TextField name="siunits" label="SI Unit" value={siUnits} onChange={handlesiunitsChange} required/>
             </Stack>
 
 
-      <LoadingButton fullWidth size="large" type="submit" variant="contained" onClick={handleAddDeviceSubmit} style={{ marginTop: '16px' }}>
+      <LoadingButton fullWidth size="large" type="submit" variant="contained" onClick={handleAddSlaveSubmit} style={{ marginTop: '16px' }}>
         ADD DEVICE
       </LoadingButton>
         </div>

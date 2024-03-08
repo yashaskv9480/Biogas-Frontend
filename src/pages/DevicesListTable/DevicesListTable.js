@@ -1,4 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
+import PersonIcon from '@mui/icons-material/Person';
 import { Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import Cookies from "js-cookie";
@@ -20,7 +21,11 @@ const DevicesListTable = () => {
     const navigate = useNavigate()
 
     const navigateHandle = () => {
-        navigate('../add-device', { replace: true });
+        navigate('../add-device');
+    }
+
+    const navigatedevicemanagement = () => {
+        navigate('../manage-device-roles');
     }
 
     const devicesWithUniqueId = devices.map((device, index) => ({
@@ -51,12 +56,16 @@ const DevicesListTable = () => {
       };  
 
       const navigateaddslave = async (deviceId) => {
-        navigate(`../add-slave/${deviceId}`, { replace: true });
+        navigate(`../add-slave/${deviceId}`);
+      };    
+
+      const navigateviewslave = async (deviceId) => {
+        navigate(`../view-slave/${deviceId}`);
       };    
       
       const navigatedashboard = async (deviceId) => {
-        navigate(`../app/${deviceId}`,{replace: true});
-      };
+        navigate(`../app/${deviceId}`);
+      }; 
 
         const columns = [
         { id: 1, field: 'device_id', headerName: 'Device ID', flex: 1 },
@@ -90,7 +99,7 @@ const DevicesListTable = () => {
             headerName: 'View Slave',
             flex: 1,
             renderCell: (params) => (
-                <button className="btn btn-primary" onClick={() => {navigateaddslave(params.row.device_id)}} >
+                <button className="btn btn-primary" onClick={() => {navigateviewslave(params.row.device_id)}} >
                     View Slave
                 </button>
                 
@@ -150,7 +159,19 @@ const DevicesListTable = () => {
         >
           Add device
         </Button>
-      )}
+      )
+      }
+            {isAdmin && ( 
+        <Button
+          style={{ marginBottom: '16px' , marginLeft: '20px'}}
+          variant="contained"
+          startIcon={<PersonIcon />}
+          onClick={navigatedevicemanagement}
+        >
+          Manage Device Roles 
+        </Button>
+      )
+      }
             {loading ? (
                 <Loader />
             ) : devices.length > 0 ? (

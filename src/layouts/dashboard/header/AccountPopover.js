@@ -52,7 +52,6 @@ export default function AccountPopover() {
     navigate('/login', { replace: true });
     setOpen(null);
   }
-  console.log(Account.displayName)
 
   return (
     <>

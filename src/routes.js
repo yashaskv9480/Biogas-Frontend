@@ -13,6 +13,8 @@ import SensorValuePage from './pages/SensorValue/SensorValuePage';
 import TodoListtable from './pages/TodoListTable/TodoListtable';
 import AddUser from './pages/UserAdd/UserAdd';
 import UserListTable from './pages/UserListTable/UserListTable';
+import SlaveListTable from './pages/ViewSlave/SlaveListTable';
+import ManageDeviceRoles from './pages/ManageDeviceroles/ManageDeviceRoles';
 
 export default function Router() {
   const navigate = useNavigate();
@@ -40,7 +42,10 @@ export default function Router() {
         { path: 'todo', element: <TodoListtable/>},
         { path: 'addtodo', element: <AddTodo/>},
         { path: 'weight-logs', element: <WeightReport/>},
-        { path: 'add-slave/:device_id' , element: <AddSlave/>}
+        { path: 'add-slave/:deviceId' , element: <AddSlave/>},
+        { path: 'view-slave/:deviceId' , element: <SlaveListTable/>},
+        { path: 'manage-device-roles' , element: <ManageDeviceRoles/>}
+
       ],
     },
     { path: 'sensor-value/:device_id', element: <SensorValuePage /> },
