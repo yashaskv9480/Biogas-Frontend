@@ -15,6 +15,7 @@ import AddUser from './pages/UserAdd/UserAdd';
 import UserListTable from './pages/UserListTable/UserListTable';
 import SlaveListTable from './pages/ViewSlave/SlaveListTable';
 import ManageDeviceRoles from './pages/ManageDeviceroles/ManageDeviceRoles';
+import ManagerAdd from './pages/ManagerAdd/ManagerAdd';
 
 export default function Router() {
   const navigate = useNavigate();
@@ -36,8 +37,8 @@ export default function Router() {
         { path: 'managers', element: <ManagerListTable /> },
         { path: 'devices', element: <DevicesListTable /> },
         { path: 'add-device', element: <AddDevice /> },
-        { path: 'add-manager', element: <AddUser /> },
-        { path: 'add-user', element: <h1><AddUser/></h1> },
+        { path: 'addmanager', element: <ManagerAdd /> },
+        { path: 'adduser', element: <h1><AddUser/></h1> },
         { path: 'sensor_values', element: <Report/>},
         { path: 'todo', element: <TodoListtable/>},
         { path: 'addtodo', element: <AddTodo/>},

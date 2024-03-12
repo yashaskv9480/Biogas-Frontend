@@ -3,6 +3,7 @@ import { jwtDecode } from "jwt-decode";
 
 const useAuth = () => {
   const token = Cookies.get('token');
+  let uid = null;
   let role = "user";
   let isAdmin = false;
   let isManager = false;
@@ -11,6 +12,7 @@ const useAuth = () => {
 
   if (token) {
     user = jwtDecode(token);
+    uid = user.id;
     role = user.type;
 
     if (role === 'admin') {
@@ -21,7 +23,7 @@ const useAuth = () => {
     else if (role === 'user'){
       isUser = true
     }
-    return { role, user, isAdmin, isManager,isUser };
+    return { role, user, isAdmin, isManager,isUser, uid };
 
   }
 

@@ -21,7 +21,7 @@ const ManagerListTable = () => {
     const navigate = useNavigate()
 
     const navigateHandle = () => {
-        navigate('../add-manager', { role: "manager" }, { replace: true });
+        navigate('../addmanager', { role: "manager" }, { replace: true });
     }
 
     const managersWithUniqueId = managers.map((manager, index) => ({
@@ -34,10 +34,13 @@ const ManagerListTable = () => {
     );
 
     const deletemanager = async (uid) => {
+        const confirmed = window.confirm("The manager will be deleted !!! Not recommeded !!! Are you sure??");
+        if (!confirmed) {
+          return; 
+        }
         try {
-          const deleteTodo = await Biogasapi.delete(`/deletemanager/${uid}`)
-          console.log(deleteTodo);
-          setManagers(managers.filter((manager) => manager.uid !== uid));
+          const deleteTodo = await Biogasapi.delete(`/delete_manager_user/${uid}`)
+          window.location.reload(); 
         } catch (err) {
           console.error(err.message);
         }

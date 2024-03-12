@@ -103,28 +103,7 @@ const SlaveListTable = () => {
             <Helmet>
                 <title> Biogas | View Slaves </title>
             </Helmet>
-            {loading ? (
-                <Loader />
-            ) : deviceRole.length > 0 ? (
-                <>
-                    <h1>Allowed access</h1>
-                    <div style={{ height: 'auto', width: '40%',marginLeft:'20%' }}>
-                        <DataGrid 
-                            rows={filteredslave} 
-                            columns={columns} 
-                            pageSize={10} 
-                            sx={{
-                                boxShadow: 2,
-                                border: 2,
-                                borderColor: 'primary.light',
-                                '& .MuiDataGrid-cell:hover': {
-                                  color: 'primary.main',
-                                },
-                              }}
-                        />
-                    </div>
-                    <h1>Add access</h1>     
-                    <div>
+            <div>
                     <FormControl sx={{ m: 1, minWidth: 150 }}>
                         <InputLabel id="demo-simple-select-autowidth-label">Username</InputLabel>
                         <Select
@@ -165,6 +144,28 @@ const SlaveListTable = () => {
                     Add Role
                 </button>
                     </div>
+            {loading ? (
+                <Loader />
+            ) : deviceRole.length > 0 ? (
+                <>
+                    <h1>Allowed access</h1>
+                    <div style={{ height: 'auto', width: '40%',marginLeft:'20%' }}>
+                        <DataGrid 
+                            rows={filteredslave} 
+                            columns={columns} 
+                            pageSize={10} 
+                            sx={{
+                                boxShadow: 2,
+                                border: 2,
+                                borderColor: 'primary.light',
+                                '& .MuiDataGrid-cell:hover': {
+                                  color: 'primary.main',
+                                },
+                              }}
+                        />
+                    </div>
+                    <h1>Add access</h1>     
+ 
                 </>
                 
             ) : (

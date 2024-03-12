@@ -78,7 +78,7 @@ const AddSlave = () => {
 
 
       <LoadingButton fullWidth size="large" type="submit" variant="contained" onClick={handleAddSlaveSubmit} style={{ marginTop: '16px' }}>
-        ADD DEVICE
+        ADD SLAVE
       </LoadingButton>
         </div>
     )

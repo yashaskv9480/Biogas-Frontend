@@ -1,61 +1,83 @@
 import AddIcon from '@mui/icons-material/Add';
-import { Button, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 
 import Cookies from "js-cookie";
-import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import Biogasapi from '../apis/Biogasapi';
+
+
 import Loader from "../../components/loading/Loading";
 
-import "./UserListTable.css";
 
-const columns = [
-    { field: 'name', headerName: 'User Name', flex: 1 },
-    { field: 'address', headerName: 'Address', flex: 1 },
-    { field: 'mobile', headerName: 'Mobile', flex: 1 },
-    { field: 'email', headerName: 'Email', flex: 1 },
-];
 
-const UserListTable = () => {
-    const [users, setUsers] = useState([])
+const ManagerListTable = () => {
+    const [managers, setManagers] = useState([])
     const [loading, setLoading] = useState(true)
-    const [searchQuery, setSearchQuery] = useState("")
+    const [searchQuery, setSearchQuery] = useState("")  
 
     const navigate = useNavigate()
-    const token = Cookies.get('token');
-    const user = token ? jwtDecode(token): undefined;
-    const usertype = user ? user.type : undefined;
 
     const navigateHandle = () => {
-        navigate('../add-user', { replace: true });
+        navigate('../adduser', { role: "manager" }, { replace: true });
     }
 
-    const usersWithUniqueId = users.map((user, index) => ({
-        id: user.uid, // Use user_id as the unique identifier
-        ...user,
+    const managersWithUniqueId = managers.map((manager, index) => ({
+        id: manager.uid,
+        ...manager,
     }));
 
-    const userManagers = usersWithUniqueId.filter((user) =>
-        user.name.toLowerCase().includes(searchQuery.toLowerCase())
+    const filteredManagers = managersWithUniqueId.filter((manager) =>
+        manager.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
+    const deletemanager = async (uid) => {
+        const confirmed = window.confirm("The user will be deleted !!! Not recommeded !!! Are you sure??");
+        if (!confirmed) {
+          return; 
+        }
+        try {
+          const deleteTodo = await Biogasapi.delete(`/delete_manager_user/${uid}`)
+          if(deleteTodo.status === 200){
+            window.location.reload(); 
+            console.log(deleteTodo.status)
+        }        } catch (err) {
+          console.error(err.message);
+        }
+      };  
+
+      const columns = [
+        { field: 'name', headerName: 'Manager Name', flex: 1 },
+        { field: 'address', headerName: 'Address', flex: 1 },
+        { field: 'mobile', headerName: 'Mobile', flex: 1 },
+        { field: 'email', headerName: 'Email', flex: 1 },
+        {
+            field: 'delete',
+            headerName: 'Delete',
+            flex: 1,
+            renderCell: (params) => (
+                <button className="btn btn-danger" onClick={() => {deletemanager(params.row.uid)}}>
+                    Delete
+                </button>
+                
+            ),
+        },
+    ];
+    
     useEffect(() => {
 
-        const fetchManagerList = async () => {
+        const fetchDevicesList = async () => {
             const uid = Cookies.get('uid')
-            const role = "user"
             try {
-                const response = await fetch("http://localhost:4001/api/get-tenant-user", {
-                    method: "GET",
-                    headers: { uid , role}
-                });
-                const jsonData = await response.json();
-                if(!jsonData.error){
-                    setUsers(jsonData);
+                const response = await Biogasapi.get("/getusers");
+                
+                if(!response.error){
+                    setManagers(response.data);
+                    console.log(managers)
                 }
-                console.log(jsonData)
+                console.log(response)
             } catch (err) {
                 console.error(err.message);
             } finally {
@@ -63,64 +85,50 @@ const UserListTable = () => {
             }
         };
 
-        fetchManagerList();
+        fetchDevicesList();
     }, [])
-
-    const evenOddDark = (params) => {
-        // Use the index of the row to determine odd or even
-        return params.rowIndex % 2 === 0 ? 'even-row' : 'odd-row';
-    };
-
-    const handleRowClick = (rowData) => {
-        console.log("Clicked row: " , rowData.id);
-        
-    }
-
     return (
         <>
             <Helmet>
                 <title> Sensor values </title>
             </Helmet>
-            {usertype === 'manager' && (
             <Button
-            style={{ marginBottom: '16px' }}
-            variant="contained"
-            startIcon={<AddIcon />}
-            onClick={navigateHandle}
+                style={{ marginBottom: '16px' }}
+                variant="contained"
+                startIcon={<AddIcon />}
+                onClick={navigateHandle}
             >
-            Add User
-            </Button> )}
+                Add User
+            </Button>
             {loading ? (
                 <Loader />
-            ) : users.length > 0 ? (
+            ) : managers.length > 0 ? (
                 <>
                     <h1>Users</h1>
-                    <TextField
-                        label="Search by Name"
+                    {/* <TextField
+                        label="Search by Description"
                         variant="outlined"
                         fullWidth
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)} // Update search query state
                         style={{ margin: "16px 0" }}
-                    />
+                    /> */}
                     <center>
-                    <div style={{ height: 400, width: '75%' }}>
-                        <DataGrid 
-                            rows={userManagers} 
-                            columns={columns} 
-                            pageSize={10} 
-                            getRowClassName={evenOddDark} 
-                            sx={{
-                                boxShadow: 2,
-                                border: 2,
-                                borderColor: 'primary.light',
-                                '& .MuiDataGrid-cell:hover': {
-                                  color: 'primary.main',
-                                },
-                              }}
-                            onRowClick={(params) => {handleRowClick(params.row)}}
+                        <div style={{ height: 400, width: '100%' }}>
+                            <DataGrid
+                                rows={filteredManagers}
+                                columns={columns}
+                                pageSize={10}
+                                sx={{
+                                    boxShadow: 2,
+                                    border: 2,
+                                    borderColor: 'primary.light',
+                                    '& .MuiDataGrid-cell:hover': {
+                                        color: 'primary.main',
+                                    },
+                                }}
                             />
-                    </div>
+                        </div>
                     </center>
                 </>
             ) : (
@@ -130,4 +138,4 @@ const UserListTable = () => {
     )
 }
 
-export default UserListTable
+export default ManagerListTable

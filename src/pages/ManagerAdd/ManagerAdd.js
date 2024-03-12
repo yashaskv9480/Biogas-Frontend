@@ -8,7 +8,7 @@ import useAuth from '../../sections/auth/login/useAuth';
 import Biogasapi from '../apis/Biogasapi';
 
 
-const AddUser = (role) => {
+const ManagerAdd = () => {
     const navigate = useNavigate();
     const {uid} = useAuth();
     const [name, setName] = useState("")
@@ -35,7 +35,7 @@ const AddUser = (role) => {
     }
 
     const handleAddDeviceSubmit = async () => {
-
+                
         try {
             const response = await Biogasapi.post("/add_manager_user", {
                 name,
@@ -44,7 +44,7 @@ const AddUser = (role) => {
                 mobile,
                 email,
                 adminId : uid,
-                role : "user"
+                role : "manager"
             });
     
             if (response.status !== 200) {
@@ -70,10 +70,10 @@ const AddUser = (role) => {
                 <TextField name="mobile" label="Mobile" value={mobile} onChange={handleMobileChange} required/>
             </Stack>
       <LoadingButton fullWidth size="large" type="submit" variant="contained" onClick={handleAddDeviceSubmit} style={{ marginTop: '16px' }}>
-        ADD USER
+        ADD MANAGER
       </LoadingButton>
         </div>
     )
 }
 
-export default AddUser;
+export default ManagerAdd;
