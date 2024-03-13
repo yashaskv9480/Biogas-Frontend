@@ -82,7 +82,7 @@ const Button = styled(BaseButton)(
 
 // ... (imports remain unchanged)
 
-const CustomButton = ({ action }) => {
+const CustomButton = ({ action,deviceId }) => {
     const [disabled, setDisabled] = React.useState(false);
     const navigate = useNavigate();
 
@@ -112,9 +112,26 @@ const CustomButton = ({ action }) => {
       navigate('../weight-logs', { replace: true });
     }
     
+    const handlereportnavgate = () => {
+      navigate('../sensor_values', { replace: true });
+    }
+    
+    const determineHandler = () => {
+      switch (action) {
+        case 'log':
+          return handleClick;
+        case 'view':
+          return handlenavigate;
+        case 'report':
+          return handlereportnavgate;
+        default:
+          return null;
+      }
+    };
+
     return (
-      <Button onClick={action === 'log' ? handleClick : handlenavigate} disabled={disabled}>
-        {action === 'log' ? 'Log Data' : 'View Logged Data'}
+      <Button onClick={determineHandler()} disabled={disabled}>
+      {action === 'log' ? 'Log Weight' : action === 'view' ? 'View Logged Weight' : 'Report'}
       </Button>
     );
   };
@@ -124,6 +141,7 @@ const CustomButton = ({ action }) => {
       <Stack spacing={2} direction="row">
         <CustomButton action="log">Log Weight</CustomButton>
         <CustomButton action="view">View Logged Data</CustomButton>
+        <CustomButton action="report">Report</CustomButton>
       </Stack>
     );
   }
