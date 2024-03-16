@@ -82,37 +82,37 @@ export default function DashboardAppPage() {
                 sx={{  marginLeft: '70px' }}
               >
                 <Grid item xs={12} sm={6} md={3}>
-                  <WeightWithButton deviceId={deviceId} />
+                  <WeightWithButton  deviceId={deviceId} />
                 </Grid>
               </Grid>
             <Grid container spacing={3}>
 
 
               <Grid item xs={14} sm={8} md={4}>
-                <Temp deviceId={deviceId}/>
+                <Temp keys = 'temperature' deviceId={deviceId}/>
               </Grid>
 
               <Grid item xs={14} sm={8} md={4}>
-                <Weight deviceId={deviceId}/>
+                <Weight keys = 'weight' deviceId={deviceId}/>
               </Grid>
 
               <Grid item xs={14} sm={8} md={4}>
-                <PhComponent deviceId={deviceId}/>
+                <PhComponent keys = 'pH' deviceId={deviceId}/>
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
-                <RCard deviceId={deviceId}/>
-              </Grid>
-
-              <Grid item xs={12} sm={6} md={3}>
-                <YCard deviceId={deviceId}/>
+                <RCard keys = 'r' deviceId={deviceId}/>
               </Grid>
 
               <Grid item xs={12} sm={6} md={3}>
-                <BCard deviceId={deviceId}/>
+                <YCard keys = 'y' deviceId={deviceId}/>
               </Grid>
 
               <Grid item xs={12} sm={6} md={3}>
-                <Frequency deviceId={deviceId}/>
+                <BCard keys = 'b' deviceId={deviceId}/>
+              </Grid>
+
+              <Grid item xs={12} sm={6} md={3}>
+                <Frequency keys = 'frequency' deviceId={deviceId}/>
               </Grid>
 
                 

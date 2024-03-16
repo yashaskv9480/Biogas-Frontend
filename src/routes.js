@@ -42,7 +42,7 @@ export default function Router() {
         { path: 'sensor_values', element: <Report/>},
         { path: 'todo', element: <TodoListtable/>},
         { path: 'addtodo', element: <AddTodo/>},
-        { path: 'weight-logs', element: <WeightReport/>},
+        { path: 'weight-logs/:deviceId', element: <WeightReport/>},
         { path: 'add-slave/:deviceId' , element: <AddSlave/>},
         { path: 'view-slave/:deviceId' , element: <SlaveListTable/>},
         { path: 'manage-device-roles' , element: <ManageDeviceRoles/>}

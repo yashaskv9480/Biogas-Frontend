@@ -37,7 +37,7 @@ const getPhColor = (ph) => {
   return "#lightgoldenrodyellow";
 };
 
-const PhComponent = ({deviceId}) => {
+const PhComponent = ({keys,deviceId}) => {
    const [ph,setph] = useState(0.0)
   const [value, setValue] = useState(0.5);
 
@@ -46,14 +46,14 @@ const PhComponent = ({deviceId}) => {
   useEffect(() => {
     const fetchrecentvalues = async () => {
       try {
-        const response = await Biogasapi.get(`/dashboard/${deviceId}`);
+        const response = await Biogasapi.get(`/dashboard/${keys}/${deviceId}`);
   
           if (!response.error) {
 
-            const firstSensorValue = response.data[0];
+            const firstSensorValue = response.data;
 
             // Update only the 'r' value in the state
-            setph(firstSensorValue.ph ? firstSensorValue.ph : 0.0);            
+            setph(firstSensorValue.value ? firstSensorValue.value : 0.0);            
         //    console.log(firstSensorValue.r)
 
           }
@@ -66,7 +66,7 @@ const PhComponent = ({deviceId}) => {
       fetchrecentvalues();
   //    console.log(r)
 
-    }, 3000); // Update every 3 seconds
+    }, 5000); 
 
     return () => clearInterval(interval);
   }, []);

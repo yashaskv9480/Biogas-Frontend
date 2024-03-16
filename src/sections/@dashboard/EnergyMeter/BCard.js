@@ -21,25 +21,22 @@ const StyledIcon = styled("div")(({ theme }) => ({
     )} 100%)`,
 }));
 
-const BCard = ({deviceId}) => {
+const BCard = ({keys,deviceId}) => {
   const [b,setb] = useState(0.0)
   const [value, setValue] = useState(0.5); // Initial value
-  const [isPopped, setIsPopped] = useState(false);
 
 
   // Simulate live data updates
   useEffect(() => {
     const fetchrecentvalues = async () => {
       try {
-        const response = await Biogasapi.get(`/dashboard/${deviceId}`);
+        const response = await Biogasapi.get(`/dashboard/${keys}/${deviceId}`);
   
           if (!response.error) {
 
-            const firstSensorValue = response.data[0];
+            const firstSensorValue = response.data;
 
-            // Update only the 'r' value in the state
-            setb(firstSensorValue.b ? firstSensorValue.b : 0.0);            
-        //    console.log(firstSensorValue.r)
+            setb(firstSensorValue.value ? firstSensorValue.value : 0.0);            
 
           }
       } catch (err) {
@@ -49,23 +46,16 @@ const BCard = ({deviceId}) => {
 
     const interval = setInterval(() => {
       fetchrecentvalues();
-  //    console.log(r)
 
-    }, 3000); // Update every 3 seconds
+    }, 5000); 
 
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
-//    console.log(r); // You can remove or modify this line
     setValue(b);
-    setIsPopped(true);
-
-    // Reset the popping effect after a short delay
-    setTimeout(() => {
-      setIsPopped(false);
-    }, 300);
   }, [b]);
+
   return (
     <Card
       sx={{

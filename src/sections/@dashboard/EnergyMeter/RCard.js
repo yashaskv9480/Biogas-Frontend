@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
-import GaugeChart from "react-gauge-chart";
 import { Card, Typography, styled } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-import Biogasapi from "../../../pages/apis/Biogasapi";
+import { useEffect, useState } from "react";
 import Iconify from "../../../components/iconify"; // Assuming you have an Iconify component
+import Biogasapi from "../../../pages/apis/Biogasapi";
 
 
 const StyledIcon = styled("div")(({ theme }) => ({
@@ -30,7 +29,7 @@ const GaugePopup = styled("div")({
   transition: "transform 0.3s ease-in-out",
 });
 
-const RCard = ({deviceId}) => {
+const RCard = ({keys,deviceId}) => {
   const [r,setr] = useState(0.0)
   const [value, setValue] = useState(0.5); // Initial value
   const [isPopped, setIsPopped] = useState(false);
@@ -40,14 +39,14 @@ const RCard = ({deviceId}) => {
   useEffect(() => {
     const fetchrecentvalues = async () => {
       try {
-        const response = await Biogasapi.get(`/dashboard/${deviceId}`);
+        const response = await Biogasapi.get(`/dashboard/${keys}/${deviceId}`);
   
           if (!response.error) {
 
-            const firstSensorValue = response.data[0];
+            const firstSensorValue = response.data;
 
             // Update only the 'r' value in the state
-            setr(firstSensorValue.r ? firstSensorValue.r : 0.0);            
+            setr(firstSensorValue.value ? firstSensorValue.value : 0.0);            
         //    console.log(firstSensorValue.r)
 
           }
@@ -60,7 +59,7 @@ const RCard = ({deviceId}) => {
       fetchrecentvalues();
   //    console.log(r)
 
-    }, 3000); // Update every 3 seconds
+    }, 5000); // Update every 3 seconds
 
     return () => clearInterval(interval);
   }, []);

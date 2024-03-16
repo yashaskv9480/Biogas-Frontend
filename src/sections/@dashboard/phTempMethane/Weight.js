@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
 import { Card, Typography, styled } from "@mui/material";
+import { useEffect, useState } from "react";
 import ReactSpeedometer from "react-d3-speedometer";
-import Biogasapi from "../../../pages/apis/Biogasapi";
 import Iconify from "../../../components/iconify"; // Assuming you have an Iconify component
+import Biogasapi from "../../../pages/apis/Biogasapi";
 
 const StyledIcon = styled("div")(({ theme }) => ({
   margin: "auto",
@@ -37,7 +37,7 @@ const getMethaneColor = (methane) => {
   return "#lightgoldenrodyellow";
 };
 
-const Weight = ({deviceId}) => {
+const Weight = ({keys,deviceId}) => {
   const [weight,setweight] = useState(0.0)
   const [value, setValue] = useState(0.5); // Initial value
   const [isPopped, setIsPopped] = useState(false);
@@ -47,15 +47,13 @@ const Weight = ({deviceId}) => {
   useEffect(() => {
     const fetchrecentvalues = async () => {
       try {
-        const response = await Biogasapi.get(`/dashboard/${deviceId}`);
+        const response = await Biogasapi.get(`/dashboard/${keys}/${deviceId}`);
   
           if (!response.error) {
 
-            const firstSensorValue = response.data[0];
+            const firstSensorValue = response.data;
 
-            // Update only the 'r' value in the state
-            setweight(firstSensorValue.weight ? firstSensorValue.weight : 0.0);            
-        //    console.log(firstSensorValue.r)
+            setweight(firstSensorValue.value ? firstSensorValue.value : 0.0);            
 
           }
       } catch (err) {
@@ -67,7 +65,7 @@ const Weight = ({deviceId}) => {
       fetchrecentvalues();
   //    console.log(r)
 
-    }, 3000); // Update every 3 seconds
+    }, 5000); 
 
     return () => clearInterval(interval);
   }, []);

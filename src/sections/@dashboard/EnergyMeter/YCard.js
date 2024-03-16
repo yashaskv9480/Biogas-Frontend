@@ -21,7 +21,7 @@ const StyledIcon = styled("div")(({ theme }) => ({
     )} 100%)`,
 }));
 
-const YCard = ({deviceId}) => {
+const YCard = ({keys,deviceId}) => {
   const [y,sety] = useState(0.0)
   const [value, setValue] = useState(0.5); // Initial value
   const [isPopped, setIsPopped] = useState(false);
@@ -31,14 +31,14 @@ const YCard = ({deviceId}) => {
   useEffect(() => {
     const fetchrecentvalues = async () => {
       try {
-        const response = await Biogasapi.get(`/dashboard/${deviceId}`);
+        const response = await Biogasapi.get(`/dashboard/${keys}/${deviceId}`);
   
           if (!response.error) {
 
-            const firstSensorValue = response.data[0];
+            const firstSensorValue = response.data;
 
             // Update only the 'r' value in the state
-            sety(firstSensorValue.y ? firstSensorValue.y : 0.0);            
+            sety(firstSensorValue.value ? firstSensorValue.value : 0.0);            
        //     console.log(firstSensorValue.y)
 
           }
@@ -51,7 +51,7 @@ const YCard = ({deviceId}) => {
       fetchrecentvalues();
    //   console.log(y)
 
-    }, 3000); // Update every 3 seconds
+    }, 5000); 
 
     return () => clearInterval(interval);
   }, []);

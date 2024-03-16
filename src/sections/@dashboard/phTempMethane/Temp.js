@@ -1,7 +1,6 @@
 import { Card, Typography, styled } from "@mui/material";
 import { useEffect, useState } from "react";
 import ReactSpeedometer from "react-d3-speedometer";
-import { useAuth } from "../../auth/login/useAuth";
 import Iconify from "../../../components/iconify"; // Assuming you have an Iconify component
 import Biogasapi from "../../../pages/apis/Biogasapi";
 
@@ -22,7 +21,7 @@ const StyledIcon = styled("div")(({ theme }) => ({
     )} 100%)`,
 }));
 
-const Temp = ({deviceId}) => {
+const Temp = ({keys,deviceId}) => {
  const [temperature,settemperature] = useState(0.0)
   const [value, setValue] = useState(0.5); // Initial value
   const [isPopped, setIsPopped] = useState(false);
@@ -32,17 +31,15 @@ const Temp = ({deviceId}) => {
   useEffect(() => {
     const fetchrecentvalues = async () => {
       try {
-          const response = await Biogasapi.get(`/dashboard/${deviceId}`);
+          const response = await Biogasapi.get(`/dashboard/${keys}/${deviceId}`);
   
           if (!response.error) {
 
-            const firstSensorValue = response.data[0];
-
-            // Update only the 'r' value in the state
+            const firstSensorValue = response.data;
             console.log(firstSensorValue)
 
           
-            settemperature(firstSensorValue.temperature ? firstSensorValue.temperature : 0.0);            
+            settemperature(firstSensorValue.value ? firstSensorValue.value : 0.0);            
 
           }
       } catch (err) {
@@ -53,17 +50,15 @@ const Temp = ({deviceId}) => {
     const interval = setInterval(() => {
       fetchrecentvalues();
 
-    }, 3000); // Update every 3 seconds
+    }, 5000); 
 
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
-//    console.log(r); // You can remove or modify this line
     setValue(temperature);
     setIsPopped(true);
 
-    // Reset the popping effect after a short delay
     setTimeout(() => {
       setIsPopped(false);
     }, 300);

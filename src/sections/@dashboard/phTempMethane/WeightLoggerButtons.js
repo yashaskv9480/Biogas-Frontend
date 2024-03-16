@@ -79,18 +79,15 @@ const Button = styled(BaseButton)(
     `,
   );
 
-
-// ... (imports remain unchanged)
-
-const CustomButton = ({ action,deviceId }) => {
+const CustomButton = ({ action, deviceId }) => {
     const [disabled, setDisabled] = React.useState(false);
     const navigate = useNavigate();
 
 
-    const handleClick = () => {
+    const handleClick = (deviceId) => {
       const fetchrecentvalues = async () => {
         try {
-            const response = await Biogasapi.post("/weight-logging");
+            const response = await Biogasapi.post(`/weight-logging/${deviceId}`);
             if(response.status === 200){
               alert("Sucessfully Logged");
             }
@@ -108,40 +105,40 @@ const CustomButton = ({ action,deviceId }) => {
       }, 30000);
     };
 
-    const handlenavigate = () => {
-      navigate('../weight-logs', { replace: true });
+    const handlenavigate = (deviceId) => {
+      navigate(`../weight-logs/${deviceId}`, { replace: true });
     }
     
-    const handlereportnavgate = () => {
-      navigate('../sensor_values', { replace: true });
+    const handlereportnavgate = (deviceId) => {
+      navigate(`../sensor_values/${deviceId}`, { replace: true });
     }
     
-    const determineHandler = () => {
+    const determineHandler = (deviceId) => {
       switch (action) {
         case 'log':
-          return handleClick;
-        case 'view':
-          return handlenavigate;
+          return ()  => handleClick(deviceId) ;
+        case 'view':    
+          return () => handlenavigate(deviceId);
         case 'report':
-          return handlereportnavgate;
+          return () => handlereportnavgate(deviceId);
         default:
           return null;
       }
     };
 
     return (
-      <Button onClick={determineHandler()} disabled={disabled}>
+      <Button onClick={determineHandler(deviceId)} disabled={disabled}>
       {action === 'log' ? 'Log Weight' : action === 'view' ? 'View Logged Weight' : 'Report'}
       </Button>
     );
   };
 
-  export default function UnstyledButtonsSimple() {
-    return (
+  export default function UnstyledButtonsSimple({deviceId}) {
+    return (  
       <Stack spacing={2} direction="row">
-        <CustomButton action="log">Log Weight</CustomButton>
-        <CustomButton action="view">View Logged Data</CustomButton>
-        <CustomButton action="report">Report</CustomButton>
+        <CustomButton action="log" deviceId = {deviceId}>Log Weight</CustomButton>
+        <CustomButton action="view" deviceId = {deviceId}>View Logged Data</CustomButton>
+        <CustomButton action="report" deviceId = {deviceId}>Report</CustomButton>
       </Stack>
     );
   }
